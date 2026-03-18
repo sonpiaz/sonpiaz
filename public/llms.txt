@@ -1,0 +1,19 @@
+# Son Piaz
+
+> Builder of AI-native tools for affiliate marketing.
+
+## About
+
+Son Piaz is the founder of Affitor, an AI-powered platform that helps SaaS companies launch, manage, and scale their affiliate programs. He believes the best software will be built by humans and AI working together. Most of his work is open source.
+
+## Projects
+
+- [Affitor](https://affitor.com): AI-native affiliate marketing platform for SaaS
+- [affiliate-skills](https://github.com/Affitor/affiliate-skills): 45+ open-source AI agent skills for affiliate marketers
+
+## Links
+
+- Website: https://sonpiaz.com
+- X: https://x.com/sonxpiaz
+- GitHub: https://github.com/sonpiaz
+- LinkedIn: https://linkedin.com/in/sonpiaz
