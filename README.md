@@ -21,12 +21,6 @@ Founder of [Affitor](https://affitor.com) — an AI-native affiliate marketing p
 | [**Kapt**](https://github.com/sonpiaz/kapt) | Screenshot tool with annotation, OCR & scrolling capture | `brew install --cask sonpiaz/tap/kapt` |
 | [**Yap**](https://github.com/sonpiaz/yap) | Push-to-talk dictation — hold a hotkey, speak, text appears | `brew install --cask sonpiaz/tap/yap` |
 
-#### Curated Lists
-| Project | Description |
-|---------|-------------|
-| [**awesome-cli-coding-agents**](https://github.com/sonpiaz/awesome-cli-coding-agents) | Directory of terminal-native AI coding agents and harnesses |
-| [**awesome-agent-skills**](https://github.com/sonpiaz/awesome-agent-skills) | Skills, tools & tutorials for AI coding agents |
-
 ---
 
 ### 📡 Links
