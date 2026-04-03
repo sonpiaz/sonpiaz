@@ -13,7 +13,6 @@ Founder of [Affitor](https://affitor.com) — an AI-native affiliate marketing p
 |---------|-------------|-|
 | [**affiliate-skills**](https://github.com/Affitor/affiliate-skills) | 45 AI agent skills for the entire affiliate marketing funnel | ![Stars](https://img.shields.io/github/stars/Affitor/affiliate-skills?style=flat) |
 | [**content-pipeline**](https://github.com/Affitor/content-pipeline) | Research trending topics → AI writes LinkedIn posts with branded infographics | ![Stars](https://img.shields.io/github/stars/Affitor/content-pipeline?style=flat) |
-| [**evox**](https://github.com/sonpiaz/evox) | Multi-agent orchestration system — the COO for your AI engineering team | ![Stars](https://img.shields.io/github/stars/sonpiaz/evox?style=flat) |
 | [**hidrix-tools**](https://github.com/sonpiaz/hidrix-tools) | MCP server: web search, social media search, web fetch for any AI agent | ![Stars](https://img.shields.io/github/stars/sonpiaz/hidrix-tools?style=flat) |
 
 #### macOS Tools
