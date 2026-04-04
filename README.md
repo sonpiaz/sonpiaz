@@ -18,6 +18,7 @@ Founder of [Affitor](https://affitor.com) — an AI-native affiliate marketing p
 #### macOS Tools
 | Project | Description | Install |
 |---------|-------------|---------|
+| [**Pheme**](https://github.com/sonpiaz/pheme) | AI meeting notes — real-time transcript & auto-summary, Vietnamese-optimized | `git clone && make run` |
 | [**Kapt**](https://github.com/sonpiaz/kapt) | Screenshot tool with annotation, OCR & scrolling capture | `brew install --cask sonpiaz/tap/kapt` |
 | [**Yap**](https://github.com/sonpiaz/yap) | Push-to-talk dictation — hold a hotkey, speak, text appears | `brew install --cask sonpiaz/tap/yap` |
 
