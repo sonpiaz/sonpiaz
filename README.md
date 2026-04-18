@@ -11,7 +11,8 @@ Founder of [Affitor](https://affitor.com) — an AI-native affiliate marketing p
 #### AI & Agents
 | Project | Description | |
 |---------|-------------|-|
-| [**affiliate-skills**](https://github.com/Affitor/affiliate-skills) | 45 AI agent skills for the entire affiliate marketing funnel | ![Stars](https://img.shields.io/github/stars/Affitor/affiliate-skills?style=flat) |
+| [**open-affiliate**](https://github.com/Affitor/open-affiliate) | Open registry of 450+ affiliate programs. CLI, MCP server, SDK, REST API. | ![Stars](https://img.shields.io/github/stars/Affitor/open-affiliate?style=flat) |
+| [**affiliate-skills**](https://github.com/Affitor/affiliate-skills) | 52 AI agent skills for the entire affiliate marketing funnel | ![Stars](https://img.shields.io/github/stars/Affitor/affiliate-skills?style=flat) |
 | [**content-pipeline**](https://github.com/Affitor/content-pipeline) | Research trending topics → AI writes LinkedIn posts with branded infographics | ![Stars](https://img.shields.io/github/stars/Affitor/content-pipeline?style=flat) |
 | [**hidrix-tools**](https://github.com/sonpiaz/hidrix-tools) | MCP server: web search, social media search, web fetch for any AI agent | ![Stars](https://img.shields.io/github/stars/sonpiaz/hidrix-tools?style=flat) |
 
@@ -26,4 +27,4 @@ Founder of [Affitor](https://affitor.com) — an AI-native affiliate marketing p
 
 ### 📡 Links
 
-[𝕏 @sonxpiaz](https://x.com/sonxpiaz) · [LinkedIn](https://linkedin.com/in/sonpiaz) · [Blog](https://sonpiaz.com) · [affitor.com](https://affitor.com)
+[𝕏 @sonxpiaz](https://x.com/sonxpiaz) · [LinkedIn](https://linkedin.com/in/sonpiaz) · [Blog](https://sonpiaz.com) · [affitor.com](https://affitor.com) · [openaffiliate.dev](https://openaffiliate.dev)
