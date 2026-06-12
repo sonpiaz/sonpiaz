@@ -21,7 +21,7 @@ Founder of [Affitor](https://affitor.com) — an AI-native affiliate marketing p
 |---------|-------------|-|
 | [**Pheme**](https://github.com/sonpiaz/pheme) | AI meeting notes — real-time transcript & auto-summary, Vietnamese-optimized | ![Stars](https://img.shields.io/github/stars/sonpiaz/pheme?style=flat&label=stars) |
 | [**Kapt**](https://github.com/sonpiaz/kapt) | Screenshot tool with annotation, OCR & scrolling capture | ![Stars](https://img.shields.io/github/stars/sonpiaz/kapt?style=flat) |
-| [**Yap**](https://github.com/sonpiaz/yap) | Push-to-talk dictation — hold a hotkey, speak, text appears | ![Stars](https://img.shields.io/github/stars/sonpiaz/yap?style=flat) |
+| [**Haynoi**](https://github.com/sonpiaz/haynoi) | Push-to-talk dictation — hold a key, speak, text appears in any app. Vietnamese-first. | ![Stars](https://img.shields.io/github/stars/sonpiaz/haynoi?style=flat) |
 
 ---
 
