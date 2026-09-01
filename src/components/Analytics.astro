@@ -1,0 +1,27 @@
+<script>
+  const key = import.meta.env.PUBLIC_POSTHOG_KEY;
+  const host = import.meta.env.PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
+
+  if (key) {
+    const { default: posthog } = await import("posthog-js");
+
+    posthog.init(key, {
+      api_host: host,
+      defaults: "2026-05-30",
+      capture_pageview: false,
+      capture_pageleave: true,
+    });
+
+    let lastHref = "";
+
+    const capturePageview = () => {
+      const href = window.location.href;
+      if (href === lastHref) return;
+      lastHref = href;
+      posthog.capture("$pageview");
+    };
+
+    capturePageview();
+    document.addEventListener("astro:page-load", capturePageview);
+  }
+</script>
