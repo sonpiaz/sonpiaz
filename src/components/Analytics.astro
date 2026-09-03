@@ -1,27 +1,27 @@
 <script>
-  const key = import.meta.env.PUBLIC_POSTHOG_KEY;
+  // PUBLIC_POSTHOG_KEY overrides when set. Otherwise use the public Affitor
+  // Default web project (same client token already served on build2own.dev).
+  const key = import.meta.env.PUBLIC_POSTHOG_KEY || "phc_BzaAExLWFYmzDwSP3QpLZpAefUFvFwLMsE3SKQXdefjm";
   const host = import.meta.env.PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
 
-  if (key) {
-    const { default: posthog } = await import("posthog-js");
+  const { default: posthog } = await import("posthog-js");
 
-    posthog.init(key, {
-      api_host: host,
-      defaults: "2026-05-30",
-      capture_pageview: false,
-      capture_pageleave: true,
-    });
+  posthog.init(key, {
+    api_host: host,
+    defaults: "2026-05-30",
+    capture_pageview: false,
+    capture_pageleave: true,
+  });
 
-    let lastHref = "";
+  let lastHref = "";
 
-    const capturePageview = () => {
-      const href = window.location.href;
-      if (href === lastHref) return;
-      lastHref = href;
-      posthog.capture("$pageview");
-    };
+  const capturePageview = () => {
+    const href = window.location.href;
+    if (href === lastHref) return;
+    lastHref = href;
+    posthog.capture("$pageview");
+  };
 
-    capturePageview();
-    document.addEventListener("astro:page-load", capturePageview);
-  }
+  capturePageview();
+  document.addEventListener("astro:page-load", capturePageview);
 </script>
