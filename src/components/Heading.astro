@@ -1,0 +1,14 @@
+---
+import { headingId } from '../lib/heading-anchors.mjs';
+
+interface Props {
+  text: string;
+  level?: 'h2' | 'h3';
+  id?: string;
+  class?: string;
+}
+
+const { text, level: Tag = 'h2', id = headingId(text), class: className } = Astro.props;
+---
+
+<Tag id={id} class={className}>{text}<a class="heading-anchor" href={`#${id}`} aria-label={`Link to ${text}`}> #</a></Tag>

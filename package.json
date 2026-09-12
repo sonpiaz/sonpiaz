@@ -1,19 +1,18 @@
 {
-  "name": "sonpiaz",
+  "name": "sonpiaz-site",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "check:agent-surface": "node scripts/check-agent-surface.mjs",
+    "test:agent-surface": "node scripts/test-agent-surface.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.1",
-    "astro": "^6.0.5",
+    "@astrojs/rss": "^4.0.0",
+    "astro": "^5.0.0",
     "posthog-js": "^1.424.0"
   }
 }
