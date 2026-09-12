@@ -25,10 +25,10 @@ Four manager agents each own one of these projects and start their own workers. 
 | [**watch-cli**](https://github.com/sonpiaz/watch-cli) | An AI agent cannot watch a video. This turns any social video into timestamped frames and a transcript so a coding agent can read it, for roughly 50x less than sending the whole file to a multimodal API. | ![Stars](https://img.shields.io/github/stars/sonpiaz/watch-cli?style=flat) |
 | [**open-affiliate**](https://github.com/Affitor/open-affiliate) | Affiliate program terms live in PDFs and behind logins, so neither a partner nor an agent can compare them. 760 programs published as YAML in public, with an API, a CLI, an SDK and an MCP server built from the same records. | ![Stars](https://img.shields.io/github/stars/Affitor/open-affiliate?style=flat) |
 | [**Haynoi**](https://haynoi.com) | Dictation tools punish you for switching between Vietnamese and English mid sentence, which is how most Vietnamese developers talk. Hold a key, speak, and the words land in whatever app has focus. | ![Stars](https://img.shields.io/github/stars/sonpiaz/haynoi?style=flat) |
-| [**Pheme**](https://www.trypheme.com) | Meeting notetakers send a bot into your call, and they get a bilingual meeting wrong in both languages. Pheme records from the device instead, so nothing joins the call. `Private beta` | |
+| [**Pheme**](https://www.trypheme.com) | Meeting notetakers send a bot into your call, and they get a bilingual meeting wrong in both languages. Pheme records from the device instead, so nothing joins the call. | ![Status](https://img.shields.io/badge/status-private%20beta-8a8a8a?style=flat) |
 | [**Kapt**](https://github.com/sonpiaz/kapt) | Explaining a bug took three tools: capture, annotate, then retype the error text. One app does all three, including scrolling capture and OCR. | ![Stars](https://img.shields.io/github/stars/sonpiaz/kapt?style=flat) |
 | [**echoly**](https://github.com/sonpiaz/echoly) | Subtitles make you read instead of watch. A Chrome extension that translates YouTube audio and speaks it back in 13 languages. Paused since June 2026. | ![Stars](https://img.shields.io/github/stars/sonpiaz/echoly?style=flat) |
 
 ---
 
-<sub>Building from Vietnam, publishing in English. <a href="https://sonpiaz.com/stack">How these fit together</a></sub>
+<sub>Bay Area, publishing in English. <a href="https://sonpiaz.com/stack">How these fit together</a></sub>
