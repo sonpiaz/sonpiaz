@@ -1,0 +1,15 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { firstParagraph } from '../lib/site';
+
+const about = (await getEntry('pages', 'about'))!;
+const { Content } = await render(about);
+---
+
+<Layout title={about.data.title} description={about.data.description || firstParagraph(about.body)}>
+  <article class="prose">
+    <h1>{about.data.title}</h1>
+    <Content />
+  </article>
+</Layout>

@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<ul class="project-list">
+  {projects.map(({ data }) => (
+    <li>
+      <div class="project-title">
+        <a href={`/projects/${data.slug}`}>{data.name}</a>
+        <span class="meta">{data.status}</span>
+        {data.visibility === 'private' && <span class="meta">Private</span>}
+      </div>
+      <p class="one-liner">{data.one_liner}</p>
+      <p class="evidence-summary">
+        {data.evidence[0].source ? <a href={data.evidence[0].source}>{data.evidence[0].claim}</a> : data.evidence[0].claim}
+      </p>
+    </li>
+  ))}
+</ul>

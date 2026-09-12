@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Heading from './Heading.astro';
+import { isoDate, monthYear } from '../lib/site';
+
+interface Props {
+  currentId: string;
+}
+
+const { currentId } = Astro.props;
+const posts = (await getCollection('posts')).sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf() || a.data.title.localeCompare(b.data.title, 'en'));
+const current = posts.findIndex(post => post.id === currentId);
+const older = posts[current - 1];
+const newer = posts[current + 1];
+---
+
+<section class="read-next" aria-labelledby="read-next">
+  <Heading class="section-label" text="Read next" />
+  {(older || newer) && <nav class="read-next-links" aria-label="Read next">
+    {older && <div class="read-next-older">
+      <a class="read-next-title" rel="prev" href={`/writing/${older.data.slug}`}>← {older.data.title}</a>
+      <time class="meta" datetime={isoDate(older.data.date)}>{monthYear.format(older.data.date)}</time>
+    </div>}
+    {newer && <div class="read-next-newer">
+      <a class="read-next-title" rel="next" href={`/writing/${newer.data.slug}`}>{newer.data.title} →</a>
+      <time class="meta" datetime={isoDate(newer.data.date)}>{monthYear.format(newer.data.date)}</time>
+    </div>}
+  </nav>}
+  <p><a href="/writing">All writing →</a></p>
+</section>

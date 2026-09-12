@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import Heading from '../../components/Heading.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const statuses = ['Live', 'Building', 'Paused', 'Archived', 'Sold'];
+const tiers = [['main', 'Products'], ['side', 'Side projects']];
+const description = tiers.map(([tier, label]) => `${label}: ${projects.filter(({ data }) => data.tier === tier).map(({ data }) => data.name).join(', ')}.`).join(' ');
+---
+
+<Layout title="Projects" description={description}>
+  <h1>Projects</h1>
+  {tiers.map(([tier, label]) => <section aria-labelledby={tier}>
+    <Heading text={label} id={tier} class="section-label" />
+    {statuses.map(status => {
+      const group = projects.filter(({ data }) => data.tier === tier && data.status === status);
+      return group.length > 0 && <section aria-labelledby={`${tier}-${status.toLowerCase()}`}>
+        <Heading level="h3" text={status} id={`${tier}-${status.toLowerCase()}`} class="section-label" />
+        <ProjectList projects={group} />
+      </section>;
+    })}
+  </section>)}
+</Layout>

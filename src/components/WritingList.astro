@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+const sorted = [...posts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const years = [...new Set(sorted.map(post => post.data.date.getUTCFullYear()))];
+const monthYear = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+
+<div class="writing-list">
+  {years.map(year => (
+    <div class="writing-year">
+      <p class="meta year">{year}</p>
+      <ul>
+        {sorted.filter(post => post.data.date.getUTCFullYear() === year).map(({ data }) => (
+          <li>
+            <a href={`/writing/${data.slug}`}>{data.title}</a>
+            <time class="meta" datetime={data.date.toISOString().slice(0, 10)}>{monthYear.format(data.date)}</time>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

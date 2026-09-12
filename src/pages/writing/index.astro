@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import WritingList from '../../components/WritingList.astro';
+
+const posts = await getCollection('posts');
+---
+
+<Layout title="Writing" description={posts.map(({ data }) => `${data.title}: ${data.description}`).join(' ')}>
+  <h1>Writing</h1>
+  <WritingList posts={posts} />
+  <p class="meta"><a href="/rss.xml">RSS</a></p>
+</Layout>

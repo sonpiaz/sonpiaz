@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading from '../../components/Heading.astro';
+import { projectSections, projectUpdated, monthYear, isoDate, person, site, entityId } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return (await getCollection('projects')).map(project => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+const started = monthYear.format(new Date(`${data.started}-01T00:00:00Z`));
+const links = Object.entries(data.links).filter(([, href]) => href);
+const updated = links.length > 0 ? projectUpdated(project) : undefined;
+const posts = (await getCollection('posts', ({ data }) => data.product?.id === project.id)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const jsonLd = [{ '@type': 'SoftwareApplication', '@id': entityId(`/projects/${data.slug}`), name: data.name, description: data.one_liner, url: `${site}/projects/${data.slug}`, applicationCategory: 'Software', author: person }];
+---
+
+<Layout title={data.name} description={data.one_liner} jsonLd={jsonLd}>
+  <article class="prose">
+    <h1>{data.name}</h1>
+    <p class="project-intro">{data.one_liner}</p>
+    <p class="meta project-meta">
+      {data.status}{data.visibility === 'private' && <> · <span class="meta">Private</span></>} · <time datetime={data.started}>{started}</time>
+      {links.map(([label, href]) => <> · <a href={href}>{label}</a></>)}
+      {updated && <> · Updated <time datetime={isoDate(updated)}>{monthYear.format(updated)}</time></>}
+    </p>
+    {projectSections.map(([title, field]) => <><Heading text={title} /><p>{data[field]}</p></>)}
+    <Heading text="Evidence" />
+    <ul>
+      {data.evidence.map(item => <li>{item.source ? <a href={item.source}>{item.claim}</a> : item.claim}</li>)}
+    </ul>
+    {posts.length > 0 && <>
+      <Heading text="Writing about this" />
+      <ul>{posts.map(({ data }) => <li><a href={`/writing/${data.slug}`}>{data.title}</a> · <time class="meta" datetime={isoDate(data.date)}>{monthYear.format(data.date)}</time></li>)}</ul>
+    </>}
+    {project.body?.trim() && <><Heading text="Notes" /><Content /></>}
+  </article>
+</Layout>

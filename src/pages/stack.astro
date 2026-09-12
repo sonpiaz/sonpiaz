@@ -1,0 +1,14 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const stack = (await getEntry('pages', 'stack'))!;
+const { Content } = await render(stack);
+---
+
+<Layout title={stack.data.title} description={stack.data.description}>
+  <article class="prose">
+    <h1>{stack.data.title}</h1>
+    <Content />
+  </article>
+</Layout>

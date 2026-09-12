@@ -1,0 +1,38 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading from '../../components/Heading.astro';
+import ReadNext from '../../components/ReadNext.astro';
+import { fullDate, isoDate, person, site, entityId, productFor } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return (await getCollection('posts')).map(post => ({
+    params: { slug: post.data.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+const product = await productFor(post);
+const published = isoDate(data.date);
+const jsonLd = [{ '@type': 'Article', '@id': entityId(`/writing/${data.slug}`), headline: data.title, description: data.description, abstract: data.quote, datePublished: published, author: person, mainEntityOfPage: { '@type': 'WebPage', '@id': `${site}/writing/${data.slug}` } }];
+---
+
+<Layout title={data.title} description={data.description} articleDate={published} jsonLd={jsonLd}>
+  <article class="prose">
+    <h1>{data.title}</h1>
+    {data.quote && <blockquote>{data.quote}</blockquote>}
+    <p class="meta"><time datetime={published}>{fullDate.format(data.date)}</time></p>
+    <Content />
+    {product && <section class="product-mapping" aria-labelledby="the-problem-this-came-from">
+      <Heading class="section-label" text="The problem this came from" />
+      <p>{data.problem}</p>
+      <div class="project-title"><a href={`/projects/${product.data.slug}`}>{product.data.name}</a><span class="meta">{product.data.status}</span></div>
+      <p>{product.data.one_liner}</p>
+      <p><a href={`/projects/${product.data.slug}`}>Read about {product.data.name} →</a></p>
+    </section>}
+    <ReadNext currentId={post.id} />
+  </article>
+</Layout>
