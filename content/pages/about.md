@@ -69,7 +69,7 @@ where I test it on real people with real deadlines.
 
 ## What I have shipped
 
-- **Kyma API**. One key for the open and frontier models, with uptime you can check. Most gateways tell you a model is available; this one publishes what it measured per model and routes around the ones that are down. 3.19 billion tokens across 257,882 requests since April 2026.
+- **Kyma API**. One key for the open and frontier models, with uptime you can check. Most gateways tell you a model is available; this one publishes what it measured per model and routes around the ones that are down. Usage is published live on its rankings page.
 - **Mandeck**. A macOS terminal for running many coding agents at once. One agent opens a pane for another, hands it work and waits for the result, so a team of agents fits on one screen instead of twenty tabs. 25 agent CLIs supported, and 24 HTTP routes so the agents can drive it themselves.
 - **Affitor**. Affiliate software for SaaS brands. A brand runs a partner program without building the tracking: a link becomes a click, a click becomes a lead, a lead becomes a sale, and the commission is calculated and paid out. Live, with brands on it.
 - **Build to Own**. A four week cohort for Vietnamese builders who have followed enough tutorials and shipped nothing. A fixed deadline, a brief at the end of every session, and a public demo day, so the work has to exist by a date. 140 builders in the first run.

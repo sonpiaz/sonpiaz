@@ -32,7 +32,7 @@ evidence:
     source: https://kymaapi.com/models
   - claim: Every chat model probed every 6 hours under one uptime definition, published on the status page
     source: https://kymaapi.com/status
-  - claim: 3.19 billion tokens across 257,882 requests from 2,927 developers since 2026-04-05
+  - claim: Live token, request and developer counts, published on the rankings page and updated from request logs
     source: https://kymaapi.com/rankings
   - claim: 18,637 requests hit an upstream failure and still returned an answer; lifetime success 97.58 percent
 links:
