@@ -64,9 +64,9 @@ export async function llmsSummary() {
   const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   const pages = (await getCollection('pages')).filter(page => page.id !== 'home');
   return `# Son Piaz\n\n> ${home.data.headline} ${firstParagraph(home.body).split(/(?<=[.!?])\s+/)[0]}\n\n`
-    + [['main', 'Products'], ['side', 'Side projects']].map(([tier, title]) => `## ${title}\n\n` + projects.filter(({ data }) => data.tier === tier).map(({ data }) => `- [${data.name}](${site}/projects/${data.slug}.md): ${data.one_liner} Status: ${data.status}${data.visibility === 'private' ? ' · Private' : ''}. ${evidence(data.evidence[0])}`).join('\n')).join('\n\n')
-    + `\n\n## Writing\n\n${posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description}${data.quote ? ` Quote: "${data.quote}"` : ''}`).join('\n')}`
-    + `\n\n## Pages\n\n- [Home](${site}/index.md)\n- [All projects](${site}/projects.md)\n- [All writing](${site}/writing.md)\n${pages.map(page => `- [${page.data.title}](${site}/${page.id}.md)`).join('\n')}\n\n## Full text\n\n- [Full content](${site}/llms-full.txt)\n`;
+    + [['main', 'Products'], ['side', 'Side projects']].map(([tier, title]) => `## ${title}\n\n` + projects.filter(({ data }) => data.tier === tier).map(({ data }) => `- [${data.name}](${site}/projects/${data.slug}.md): ${data.one_liner} Status: ${data.status}${data.visibility === 'private' ? ' · Private' : ''}. ${evidence(data.evidence[0])} ID: ${entityId(`/projects/${data.slug}`)}`).join('\n')).join('\n\n')
+    + `\n\n## Writing\n\n${posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description}${data.quote ? ` Quote: "${data.quote}"` : ''} ID: ${entityId(`/writing/${data.slug}`)}`).join('\n')}`
+    + `\n\n## Pages\n\n- [Home](${site}/index.md) · ID: ${entityId('/')}\n- [All projects](${site}/projects.md) · ID: ${entityId('/projects')}\n- [All writing](${site}/writing.md) · ID: ${entityId('/writing')}\n${pages.map(page => `- [${page.data.title}](${site}/${page.id}.md) · ID: ${entityId(`/${page.id}`)}`).join('\n')}\n\n## Full text\n\n- [Full content](${site}/llms-full.txt)\n`;
 }
 
 export async function llmsFull() {

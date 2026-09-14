@@ -46,6 +46,7 @@ export function checkAgentSurface(root = process.cwd()) {
     assert.equal(id, expectedId, `Invalid stable ID: ${mdPath}`);
     assert(!seenIds.has(id), `Duplicate stable ID: ${id}`);
     seenIds.add(id);
+    assert(summary.includes(`ID: ${id}`), `Missing llms index ID: ${mdPath}`);
     assert(html.includes(`data-entity-id="${id}"`), `HTML identity mismatch: ${path}`);
     const graphs = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].flatMap(match => {
       const data = JSON.parse(match[1]);
