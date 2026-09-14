@@ -46,6 +46,14 @@ try {
     manifest.artifacts = fingerprint(join(fixture, 'dist'), files(join(fixture, 'dist'), '.').map(path => path.slice(2)));
     writeFileSync(fixtureManifestPath, JSON.stringify(manifest));
   };
+  const summaryPath = join(fixture, 'dist/llms.txt');
+  const summary = readFileSync(summaryPath);
+  writeFileSync(summaryPath, summary.toString().replace(' · ID: https://sonpiaz.com/about#entity', ''));
+  refreshArtifactProof();
+  assert.throws(() => checkAgentSurface(fixture), /Missing llms index ID/);
+  writeFileSync(summaryPath, summary);
+  writeFileSync(fixtureManifestPath, originalManifest);
+  checkAgentSurface(fixture);
   const extraMarkdownPath = join(fixture, 'dist/debug.md');
   writeFileSync(extraMarkdownPath, '# Debug\n\nHosted on Vercel.\n');
   refreshArtifactProof();
@@ -58,7 +66,7 @@ try {
   checkAgentSurface(fixture);
   assert.deepEqual(sourceState(root), before, 'Original source changed during negative tests');
   checkAgentSurface(root);
-  console.log('PASS: isolated corrupted Markdown, missing Markdown, stale source, stale generator, provider-bearing extra Markdown, and orphan Markdown each fail; semantic cases use refreshed artifact hashes; restored fixture and original pass.');
+  console.log('PASS: isolated corrupted Markdown, missing Markdown, stale source, stale generator, missing index ID, provider-bearing extra Markdown, and orphan Markdown each fail; semantic cases use refreshed artifact hashes; restored fixture and original pass.');
 } finally {
   rmSync(fixture, { recursive: true, force: true });
 }

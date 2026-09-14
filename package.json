@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:agent-surface": "node scripts/check-agent-surface.mjs",
-    "test:agent-surface": "node scripts/test-agent-surface.mjs"
+    "test:agent-surface": "node scripts/test-agent-surface.mjs",
+    "verify:agent-surface": "npm run build && npm run check:agent-surface && npm run test:agent-surface"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.0",
