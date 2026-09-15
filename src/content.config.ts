@@ -1,5 +1,6 @@
 import { defineCollection, reference, z } from 'astro:content';
 import { file, glob } from 'astro/loaders';
+import { stackGroupIds } from './lib/stack-groups';
 
 const projects = defineCollection({
   loader: glob({ pattern: '!(_)*.md', base: './content/projects' }),
@@ -64,6 +65,8 @@ const stack = defineCollection({
     description: z.string(),
     url: z.string().url(),
     logo: z.string().regex(/^\/images\/(?:projects|stack)\/[a-z0-9.-]+$/).optional(),
+    monochrome: z.boolean().default(false),
+    group: z.enum(stackGroupIds),
     order: z.number().int().nonnegative(),
   }).refine(data => data.id === data.slug, 'Stack id and slug must match'),
 });

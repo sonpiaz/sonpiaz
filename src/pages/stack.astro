@@ -2,18 +2,32 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import { compareStackEntries, stackUrl } from '../lib/stack';
+import { stackGroups } from '../lib/stack-groups';
 
 const stack = (await getEntry('pages', 'stack'))!;
 const { Content } = await render(stack);
 const tools = (await getCollection('stack')).sort(compareStackEntries);
+const groups = stackGroups.map(group => ({
+  ...group,
+  tools: tools.filter(tool => tool.data.group === group.id),
+}));
 const jsonLd = [{
   '@type': 'ItemList',
-  itemListElement: tools.map((tool, index) => ({
+  itemListElement: groups.map((group, groupIndex) => ({
     '@type': 'ListItem',
-    position: index + 1,
-    name: tool.data.name,
-    description: tool.data.description,
-    url: stackUrl(tool),
+    position: groupIndex + 1,
+    name: group.label,
+    item: {
+      '@type': 'ItemList',
+      name: group.label,
+      itemListElement: group.tools.map((tool, toolIndex) => ({
+        '@type': 'ListItem',
+        position: toolIndex + 1,
+        name: tool.data.name,
+        description: tool.data.description,
+        url: stackUrl(tool),
+      })),
+    },
   })),
 }];
 ---
@@ -22,19 +36,26 @@ const jsonLd = [{
   <article class="prose">
     <h1>{stack.data.title}</h1>
     <p>{stack.data.description}</p>
-    <div class="stack-table" role="table" aria-label="Tools I use">
-      <div class="stack-row stack-head" role="row">
-        <span role="columnheader">Name</span>
-        <span role="columnheader">Description</span>
-      </div>
-      {tools.map(tool => (
-        <div class="stack-row" role="row">
-          <span class="stack-name" role="cell">
-            {tool.data.logo && <img class:list={['stack-logo', { monochrome: ['github', 'vercel'].includes(tool.data.slug) }]} src={tool.data.logo} width="24" height="24" alt="" />}
-            <a href={stackUrl(tool)}>{tool.data.name}</a>
-          </span>
-          <span role="cell">{tool.data.description}</span>
-        </div>
+    <div class="stack-groups">
+      {groups.map(group => (
+        <section class="stack-group" aria-labelledby={group.anchor}>
+          <h2 id={group.anchor}>{group.label}</h2>
+          <div class="stack-table" role="table" aria-label={group.label}>
+            <div class="stack-row stack-head" role="row">
+              <span role="columnheader">Name</span>
+              <span role="columnheader">Description</span>
+            </div>
+            {group.tools.map(tool => (
+              <div class="stack-row" role="row">
+                <span class="stack-name" role="cell">
+                  {tool.data.logo && <img class:list={['stack-logo', { monochrome: tool.data.monochrome }]} src={tool.data.logo} width="24" height="24" alt="" />}
+                  <a href={stackUrl(tool)}>{tool.data.name}</a>
+                </span>
+                <span role="cell">{tool.data.description}</span>
+              </div>
+            ))}
+          </div>
+        </section>
       ))}
     </div>
     <Content />

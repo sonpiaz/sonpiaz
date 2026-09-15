@@ -10,7 +10,21 @@ const importedPosts = [
   'why-saas-startups-get-stuck-on-growth',
   'building-a-product-is-hard-getting',
 ];
-const stackProviderLine = '- [Vercel](https://vercel.com/?utm_source=sonpiaz.com&utm_medium=referral&utm_campaign=stack&utm_content=vercel): The deployment platform that publishes this static site from its reviewed main branch.';
+const stackGroups = [
+  ['coding-agents', 'Coding agents', 'coding-agents'],
+  ['workspace', 'Editors, terminal, browser, and source control', 'editors-terminal-browser-and-source-control'],
+  ['ai-models', 'AI and local model apps', 'ai-and-local-model-apps'],
+  ['languages-frameworks', 'Languages, runtimes, and frameworks', 'languages-runtimes-and-frameworks'],
+  ['infrastructure', 'Infrastructure, hosting, and delivery', 'infrastructure-hosting-and-delivery'],
+  ['data-storage', 'Data and storage', 'data-and-storage'],
+  ['business', 'Business, payments, CRM, and secrets', 'business-payments-crm-and-secrets'],
+  ['communication', 'Email and communication', 'email-and-communication'],
+  ['analytics-seo', 'Analytics and SEO', 'analytics-and-seo'],
+  ['design-content', 'Design and content', 'design-and-content'],
+  ['planning-knowledge', 'Planning and knowledge', 'planning-and-knowledge'],
+  ['tools-built', 'Tools and products I built', 'tools-and-products-i-built'],
+];
+const privateStackNames = ['Mercury', 'Strava', 'Uber', 'Gmail', 'Google Calendar', 'Google Drive', 'Goodnotes', 'Telegram', '1Password', 'LastPass CLI'];
 
 function inOrder(text, values, label) {
   let previous = -1;
@@ -28,9 +42,17 @@ function decodeHtml(value) {
 
 export function checkSiteDetails(root = process.cwd()) {
   const read = path => readFileSync(join(root, path), 'utf8');
-  const stackEntries = JSON.parse(read('content/stack.json')).sort((a, b) => a.order - b.order);
-  assert.equal(stackEntries.length, 12, 'Stack must contain the eleven approved tools plus Vercel');
+  const groupRank = new Map(stackGroups.map(([id], index) => [id, index]));
+  const stackEntries = JSON.parse(read('content/stack.json')).sort((a, b) =>
+    groupRank.get(a.group) - groupRank.get(b.group) || a.order - b.order || a.slug.localeCompare(b.slug));
+  assert.equal(stackEntries.length, 87, 'Stack must contain the complete approved inventory');
   assert.equal(new Set(stackEntries.map(entry => entry.slug)).size, stackEntries.length, 'Stack slugs must be unique');
+  assert.deepEqual([...new Set(stackEntries.map(entry => entry.group))], stackGroups.map(([id]) => id), 'Stack groups differ or are out of order');
+  for (const [group] of stackGroups) {
+    const entries = stackEntries.filter(entry => entry.group === group);
+    assert(entries.length > 0, `Stack group is empty: ${group}`);
+    assert.deepEqual(entries.map(entry => entry.order), entries.map((_, index) => index + 1), `Stack group order differs: ${group}`);
+  }
 
   const orderSurfaces = [
     ['Home HTML', read('dist/index.html'), productSlugs.map(slug => `/projects/${slug}`)],
@@ -53,12 +75,22 @@ export function checkSiteDetails(root = process.cwd()) {
 
   const stackHtml = read('dist/stack/index.html');
   const stackMarkdown = read('dist/stack.md');
-  const llms = `${read('dist/llms.txt')}\n${read('dist/llms-full.txt')}`;
+  const llmsSummary = read('dist/llms.txt');
+  const llms = `${llmsSummary}\n${read('dist/llms-full.txt')}`;
+  inOrder(stackHtml, stackGroups.map(([, label]) => `>${label}</h2>`), 'Stack HTML groups');
+  inOrder(stackMarkdown, stackGroups.map(([, label]) => `## ${label}`), 'Stack Markdown groups');
+  for (const [, label, anchor] of stackGroups) {
+    assert(llmsSummary.includes(`[${label}](https://sonpiaz.com/stack.md#${anchor})`), `llms.txt lacks Stack group: ${label}`);
+  }
+  assert.equal(stackEntries.filter(entry => entry.logo).length, 73, 'Stack logo coverage differs');
   for (const entry of stackEntries) {
     for (const [label, text] of [['Stack HTML', stackHtml], ['Stack Markdown', stackMarkdown], ['LLM exports', llms]]) {
       const candidates = [...text.matchAll(/(?:href="([^"]+)"|\]\((https?:\/\/[^)]+)\))/g)]
         .map(match => decodeHtml(match[1] || match[2]))
-        .filter(href => href.includes(`utm_content=${entry.slug}`));
+        .filter(href => {
+          try { return new URL(href).searchParams.get('utm_content') === entry.slug; }
+          catch { return false; }
+        });
       assert(candidates.length > 0, `${label} is missing attributed URL for ${entry.slug}`);
       for (const href of candidates) {
         const url = new URL(href);
@@ -75,9 +107,13 @@ export function checkSiteDetails(root = process.cwd()) {
     if (entry.logo) {
       assert(entry.logo.startsWith('/images/'), `Stack logo must be self-hosted: ${entry.slug}`);
       assert(existsSync(join(root, 'public', entry.logo)), `Stack logo is missing: ${entry.logo}`);
+      assert(stackHtml.includes(`src="${entry.logo}"`), `Stack HTML lacks logo for ${entry.slug}`);
     }
   }
-  assert(stackMarkdown.includes(stackProviderLine), 'Stack Markdown lacks the approved Vercel exception');
+  for (const name of privateStackNames) {
+    assert(!stackEntries.some(entry => entry.name === name), `Private Stack candidate was published: ${name}`);
+    assert(!stackHtml.includes(`>${name}<`) && !stackMarkdown.includes(`[${name}](`), `Private Stack candidate leaked to generated output: ${name}`);
+  }
   assert(!/<img\b[^>]*\bsrc=""/i.test(stackHtml), 'Stack rendered an empty image');
   assert(!/https?:\/\/[^"']+github-contributions/i.test(stackHtml), 'Contribution graph makes a runtime external request');
   assert(/src="\/github-contributions\.svg"[^>]*width="680"[^>]*height="114"[^>]*loading="lazy"/.test(stackHtml), 'Contribution graph lacks its self-hosted fixed-size lazy image');
@@ -158,7 +194,7 @@ export function checkSiteDetails(root = process.cwd()) {
   assert(workflow.indexOf('npm run verify:site') < workflow.indexOf('git commit --allow-empty'), 'Daily workflow commits before verification');
   assert(/git commit --allow-empty/.test(workflow) && /git push origin HEAD:main/.test(workflow), 'Daily workflow does not create and push one empty main commit');
   assert(/concurrency:/.test(workflow), 'Daily workflow lacks a concurrency lock');
-  return { products: productSlugs.length, stack: stackEntries.length, posts: importedPosts.length };
+  return { products: productSlugs.length, stack: stackEntries.length, stackGroups: stackGroups.length, posts: importedPosts.length };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

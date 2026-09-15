@@ -1,28 +1,13 @@
 [
   {
-    "id": "mandeck",
-    "slug": "mandeck",
-    "name": "Mandeck",
-    "description": "The macOS workspace where I run coding agents side by side and hand work between them.",
-    "url": "https://mandeck.dev/",
-    "logo": "/images/projects/mandeck.png",
-    "order": 1
-  },
-  {
-    "id": "cursor",
-    "slug": "cursor",
-    "name": "Cursor",
-    "description": "The editor I use when repository work needs the code, terminal, and browser in one place.",
-    "url": "https://cursor.com/",
-    "order": 2
-  },
-  {
     "id": "claude-code",
     "slug": "claude-code",
     "name": "Claude Code",
     "description": "The coding agent I use for specifications, reviews, and long repository investigations.",
     "url": "https://www.anthropic.com/claude-code",
-    "order": 3
+    "group": "coding-agents",
+    "order": 1,
+    "logo": "/images/stack/claude-code.svg"
   },
   {
     "id": "codex",
@@ -30,7 +15,182 @@
     "name": "Codex",
     "description": "The coding agent I use for bounded construction work from a written brief.",
     "url": "https://openai.com/codex/",
-    "order": 4
+    "group": "coding-agents",
+    "order": 2,
+    "logo": "/images/stack/codex.svg"
+  },
+  {
+    "id": "github-copilot",
+    "slug": "github-copilot",
+    "name": "GitHub Copilot CLI",
+    "description": "A coding agent I can run from the terminal for repository work.",
+    "url": "https://github.com/features/copilot/cli",
+    "group": "coding-agents",
+    "order": 3,
+    "logo": "/images/stack/github-copilot.svg"
+  },
+  {
+    "id": "gemini",
+    "slug": "gemini",
+    "name": "Gemini CLI",
+    "description": "A terminal coding agent available in my multi-agent workspace.",
+    "url": "https://github.com/google-gemini/gemini-cli",
+    "group": "coding-agents",
+    "order": 4,
+    "logo": "/images/stack/gemini.svg"
+  },
+  {
+    "id": "cursor",
+    "slug": "cursor",
+    "name": "Cursor",
+    "description": "The editor I use when repository work needs the code, terminal, and browser in one place.",
+    "url": "https://cursor.com/",
+    "group": "coding-agents",
+    "order": 5,
+    "logo": "/images/stack/cursor.svg",
+    "monochrome": true
+  },
+  {
+    "id": "opencode",
+    "slug": "opencode",
+    "name": "opencode",
+    "description": "An open coding agent I run from the terminal.",
+    "url": "https://opencode.ai/",
+    "group": "coding-agents",
+    "order": 6,
+    "logo": "/images/stack/opencode.svg",
+    "monochrome": true
+  },
+  {
+    "id": "aider",
+    "slug": "aider",
+    "name": "aider",
+    "description": "A terminal coding agent I keep available for repository changes.",
+    "url": "https://aider.chat/",
+    "group": "coding-agents",
+    "order": 7
+  },
+  {
+    "id": "goose",
+    "slug": "goose",
+    "name": "goose",
+    "description": "An open coding agent available in my terminal workspace.",
+    "url": "https://block.github.io/goose/",
+    "group": "coding-agents",
+    "order": 8,
+    "logo": "/images/stack/goose.svg"
+  },
+  {
+    "id": "amp",
+    "slug": "amp",
+    "name": "Amp",
+    "description": "A coding agent I use from the terminal alongside other agents.",
+    "url": "https://ampcode.com/",
+    "group": "coding-agents",
+    "order": 9,
+    "logo": "/images/stack/amp.svg"
+  },
+  {
+    "id": "crush",
+    "slug": "crush",
+    "name": "Crush",
+    "description": "A terminal coding agent in my installed agent set.",
+    "url": "https://github.com/charmbracelet/crush",
+    "group": "coding-agents",
+    "order": 10
+  },
+  {
+    "id": "factory-droid",
+    "slug": "factory-droid",
+    "name": "Factory Droid",
+    "description": "A software-development agent available in my coding workspace.",
+    "url": "https://www.factory.ai/product/droid",
+    "group": "coding-agents",
+    "order": 11
+  },
+  {
+    "id": "kimi-cli",
+    "slug": "kimi-cli",
+    "name": "Kimi CLI",
+    "description": "A terminal coding agent available for delegated repository work.",
+    "url": "https://github.com/MoonshotAI/kimi-cli",
+    "group": "coding-agents",
+    "order": 12,
+    "logo": "/images/stack/kimi.svg",
+    "monochrome": true
+  },
+  {
+    "id": "pi",
+    "slug": "pi",
+    "name": "Pi",
+    "description": "A small terminal coding agent used by my parallel worker group.",
+    "url": "https://github.com/badlogic/pi-mono",
+    "group": "coding-agents",
+    "order": 13,
+    "logo": "/images/stack/pi.svg",
+    "monochrome": true
+  },
+  {
+    "id": "devin-cli",
+    "slug": "devin-cli",
+    "name": "Devin CLI",
+    "description": "A command-line interface for running Devin tasks.",
+    "url": "https://docs.devin.ai/work-with-devin/devin-cli",
+    "group": "coding-agents",
+    "order": 14,
+    "logo": "/images/stack/devin.svg"
+  },
+  {
+    "id": "openhands-cli",
+    "slug": "openhands-cli",
+    "name": "OpenHands CLI",
+    "description": "An open coding agent available from the command line.",
+    "url": "https://github.com/OpenHands/OpenHands",
+    "group": "coding-agents",
+    "order": 15,
+    "logo": "/images/stack/openhands.svg"
+  },
+  {
+    "id": "grok-build",
+    "slug": "grok-build",
+    "name": "Grok Build",
+    "description": "A coding agent available in my terminal agent set.",
+    "url": "https://grok.com/",
+    "group": "coding-agents",
+    "order": 16,
+    "logo": "/images/stack/grok.svg",
+    "monochrome": true
+  },
+  {
+    "id": "hermes",
+    "slug": "hermes",
+    "name": "Hermes",
+    "description": "An open agent I can run from my terminal workspace.",
+    "url": "https://github.com/NousResearch/hermes-agent",
+    "group": "coding-agents",
+    "order": 17,
+    "logo": "/images/stack/hermes.svg",
+    "monochrome": true
+  },
+  {
+    "id": "openclaw",
+    "slug": "openclaw",
+    "name": "OpenClaw",
+    "description": "An open agent runtime available in my installed agent set.",
+    "url": "https://openclaw.ai/",
+    "group": "coding-agents",
+    "order": 18,
+    "logo": "/images/stack/openclaw.svg"
+  },
+  {
+    "id": "mandeck",
+    "slug": "mandeck",
+    "name": "Mandeck",
+    "description": "The macOS workspace where I run coding agents side by side and hand work between them.",
+    "url": "https://mandeck.dev/",
+    "group": "workspace",
+    "order": 1,
+    "logo": "/images/projects/mandeck.png"
   },
   {
     "id": "github",
@@ -38,16 +198,31 @@
     "name": "GitHub",
     "description": "The source, pull request, review, and CI layer for the software I publish.",
     "url": "https://github.com/",
+    "group": "workspace",
+    "order": 2,
     "logo": "/images/stack/github.svg",
-    "order": 5
+    "monochrome": true
   },
   {
-    "id": "astro",
-    "slug": "astro",
-    "name": "Astro",
-    "description": "The static framework that builds this site from one set of Markdown content.",
-    "url": "https://astro.build/",
-    "order": 6
+    "id": "visual-studio-code",
+    "slug": "visual-studio-code",
+    "name": "Visual Studio Code",
+    "description": "A code editor installed alongside my agent-first workspace.",
+    "url": "https://code.visualstudio.com/",
+    "group": "workspace",
+    "order": 3,
+    "logo": "/images/stack/visual-studio-code.svg"
+  },
+  {
+    "id": "zed",
+    "slug": "zed",
+    "name": "Zed",
+    "description": "A native code editor installed on my Mac.",
+    "url": "https://zed.dev/",
+    "logo": "/images/stack/zed.svg",
+    "monochrome": true,
+    "group": "workspace",
+    "order": 4
   },
   {
     "id": "xcode",
@@ -55,34 +230,113 @@
     "name": "Xcode",
     "description": "The build and signing tool for the native macOS apps I ship.",
     "url": "https://developer.apple.com/xcode/",
+    "logo": "/images/stack/xcode.svg",
+    "monochrome": true,
+    "group": "workspace",
+    "order": 5
+  },
+  {
+    "id": "shell",
+    "slug": "shell",
+    "name": "Shell",
+    "description": "The command-line layer underneath local builds, audits, and automation.",
+    "url": "https://www.zsh.org/",
+    "group": "workspace",
+    "order": 6,
+    "logo": "/images/stack/shell.svg",
+    "monochrome": true
+  },
+  {
+    "id": "tmux",
+    "slug": "tmux",
+    "name": "tmux",
+    "description": "The terminal multiplexer behind my lightweight parallel worker sessions.",
+    "url": "https://github.com/tmux/tmux",
+    "logo": "/images/stack/tmux.svg",
+    "monochrome": true,
+    "group": "workspace",
     "order": 7
   },
   {
-    "id": "posthog",
-    "slug": "posthog",
-    "name": "PostHog",
-    "description": "The product analytics and web-performance layer used on this site.",
-    "url": "https://posthog.com/",
-    "logo": "/images/stack/posthog.svg",
+    "id": "swiftbar",
+    "slug": "swiftbar",
+    "name": "SwiftBar",
+    "description": "The macOS menu-bar host I use for small local utilities.",
+    "url": "https://swiftbar.app/",
+    "group": "workspace",
     "order": 8
   },
   {
-    "id": "kapt",
-    "slug": "kapt",
-    "name": "Kapt",
-    "description": "The screenshot tool I use to capture, annotate, and review product changes.",
-    "url": "https://github.com/sonpiaz/kapt",
-    "logo": "/images/stack/kapt.png",
-    "order": 9
+    "id": "google-chrome",
+    "slug": "google-chrome",
+    "name": "Google Chrome",
+    "description": "The browser I use for product checks and web work.",
+    "url": "https://www.google.com/chrome/",
+    "group": "workspace",
+    "order": 9,
+    "logo": "/images/stack/google-chrome.svg"
   },
   {
-    "id": "python",
-    "slug": "python",
-    "name": "Python",
-    "description": "The language behind audits, content tooling, and small automation scripts.",
-    "url": "https://www.python.org/",
-    "logo": "/images/stack/python.svg",
-    "order": 10
+    "id": "github-cli",
+    "slug": "github-cli",
+    "name": "GitHub CLI",
+    "description": "The command-line interface I use for repositories, pull requests, and checks.",
+    "url": "https://cli.github.com/",
+    "group": "workspace",
+    "order": 10,
+    "logo": "/images/stack/github.svg",
+    "monochrome": true
+  },
+  {
+    "id": "xcodegen",
+    "slug": "xcodegen",
+    "name": "XcodeGen",
+    "description": "The project generator used to keep native Xcode configuration in source control.",
+    "url": "https://github.com/yonaskolb/XcodeGen",
+    "group": "workspace",
+    "order": 11
+  },
+  {
+    "id": "chatgpt",
+    "slug": "chatgpt",
+    "name": "ChatGPT",
+    "description": "A desktop AI workspace installed on my Mac.",
+    "url": "https://chatgpt.com/",
+    "group": "ai-models",
+    "order": 1,
+    "logo": "/images/stack/chatgpt.svg"
+  },
+  {
+    "id": "claude",
+    "slug": "claude",
+    "name": "Claude",
+    "description": "A desktop AI workspace I use alongside Claude Code.",
+    "url": "https://claude.ai/",
+    "group": "ai-models",
+    "order": 2,
+    "logo": "/images/stack/claude.svg"
+  },
+  {
+    "id": "grok",
+    "slug": "grok",
+    "name": "Grok",
+    "description": "An AI app installed alongside my coding-agent tools.",
+    "url": "https://grok.com/",
+    "group": "ai-models",
+    "order": 3,
+    "logo": "/images/stack/grok.svg",
+    "monochrome": true
+  },
+  {
+    "id": "ollama",
+    "slug": "ollama",
+    "name": "Ollama",
+    "description": "The local model runtime installed in my development environment.",
+    "url": "https://ollama.com/",
+    "group": "ai-models",
+    "order": 4,
+    "logo": "/images/stack/ollama.svg",
+    "monochrome": true
   },
   {
     "id": "typescript",
@@ -90,8 +344,122 @@
     "name": "TypeScript",
     "description": "The language used across site tooling, APIs, and product interfaces.",
     "url": "https://www.typescriptlang.org/",
-    "logo": "/images/stack/typescript.svg",
-    "order": 11
+    "group": "languages-frameworks",
+    "order": 1,
+    "logo": "/images/stack/typescript.svg"
+  },
+  {
+    "id": "python",
+    "slug": "python",
+    "name": "Python",
+    "description": "The language behind audits, content tooling, and small automation scripts.",
+    "url": "https://www.python.org/",
+    "group": "languages-frameworks",
+    "order": 2,
+    "logo": "/images/stack/python.svg"
+  },
+  {
+    "id": "swift",
+    "slug": "swift",
+    "name": "Swift",
+    "description": "The language used for my native macOS applications.",
+    "url": "https://www.swift.org/",
+    "group": "languages-frameworks",
+    "order": 3,
+    "logo": "/images/stack/swift.svg"
+  },
+  {
+    "id": "nodejs",
+    "slug": "nodejs",
+    "name": "Node.js",
+    "description": "The JavaScript runtime used by my web products and automation.",
+    "url": "https://nodejs.org/",
+    "group": "languages-frameworks",
+    "order": 4,
+    "logo": "/images/stack/nodejs.svg"
+  },
+  {
+    "id": "bun",
+    "slug": "bun",
+    "name": "Bun",
+    "description": "The runtime used by Kyma and Affitor scripts, tests, and tools.",
+    "url": "https://bun.sh/",
+    "logo": "/images/stack/bun.svg",
+    "monochrome": true,
+    "group": "languages-frameworks",
+    "order": 5
+  },
+  {
+    "id": "nextjs",
+    "slug": "nextjs",
+    "name": "Next.js",
+    "description": "The web framework used by Kyma and Affitor applications.",
+    "url": "https://nextjs.org/",
+    "group": "languages-frameworks",
+    "order": 6,
+    "logo": "/images/stack/nextjs.svg",
+    "monochrome": true
+  },
+  {
+    "id": "react",
+    "slug": "react",
+    "name": "React",
+    "description": "The interface library used across my web products.",
+    "url": "https://react.dev/",
+    "group": "languages-frameworks",
+    "order": 7,
+    "logo": "/images/stack/react.svg"
+  },
+  {
+    "id": "astro",
+    "slug": "astro",
+    "name": "Astro",
+    "description": "The static framework that builds this site from one set of Markdown content.",
+    "url": "https://astro.build/",
+    "group": "languages-frameworks",
+    "order": 8,
+    "logo": "/images/stack/astro.svg"
+  },
+  {
+    "id": "strapi",
+    "slug": "strapi",
+    "name": "Strapi",
+    "description": "The content framework used by the Affitor CMS.",
+    "url": "https://strapi.io/",
+    "group": "languages-frameworks",
+    "order": 9,
+    "logo": "/images/stack/strapi.svg"
+  },
+  {
+    "id": "tailwind-css",
+    "slug": "tailwind-css",
+    "name": "Tailwind CSS",
+    "description": "The CSS utility framework used in active product interfaces.",
+    "url": "https://tailwindcss.com/",
+    "group": "languages-frameworks",
+    "order": 10,
+    "logo": "/images/stack/tailwind.svg"
+  },
+  {
+    "id": "go",
+    "slug": "go",
+    "name": "Go",
+    "description": "A compiled language installed in my development toolchain.",
+    "url": "https://go.dev/",
+    "group": "languages-frameworks",
+    "order": 11,
+    "logo": "/images/stack/go.svg"
+  },
+  {
+    "id": "rust",
+    "slug": "rust",
+    "name": "Rust",
+    "description": "A systems language installed in my development toolchain.",
+    "url": "https://www.rust-lang.org/",
+    "group": "languages-frameworks",
+    "order": 12,
+    "logo": "/images/stack/rust.svg",
+    "monochrome": true
   },
   {
     "id": "vercel",
@@ -99,6 +467,424 @@
     "name": "Vercel",
     "description": "The deployment platform that publishes this static site from its reviewed main branch.",
     "url": "https://vercel.com/",
-    "order": 12
+    "group": "infrastructure",
+    "order": 1,
+    "logo": "/images/stack/vercel.svg",
+    "monochrome": true
+  },
+  {
+    "id": "cloudflare-workers",
+    "slug": "cloudflare-workers",
+    "name": "Cloudflare Workers",
+    "description": "The edge runtime configured for the Kyma API backend.",
+    "url": "https://workers.cloudflare.com/",
+    "group": "infrastructure",
+    "order": 2,
+    "logo": "/images/stack/cloudflare.svg"
+  },
+  {
+    "id": "railway",
+    "slug": "railway",
+    "name": "Railway",
+    "description": "A deployment platform kept in the Kyma backend configuration.",
+    "url": "https://railway.com/",
+    "group": "infrastructure",
+    "order": 3,
+    "logo": "/images/stack/railway.svg",
+    "monochrome": true
+  },
+  {
+    "id": "docker",
+    "slug": "docker",
+    "name": "Docker",
+    "description": "The container runtime in my local development toolchain.",
+    "url": "https://www.docker.com/",
+    "group": "infrastructure",
+    "order": 4,
+    "logo": "/images/stack/docker.svg"
+  },
+  {
+    "id": "docker-compose",
+    "slug": "docker-compose",
+    "name": "Docker Compose",
+    "description": "The tool I use to define local multi-container services.",
+    "url": "https://docs.docker.com/compose/",
+    "group": "infrastructure",
+    "order": 5,
+    "logo": "/images/stack/docker-compose.png"
+  },
+  {
+    "id": "colima",
+    "slug": "colima",
+    "name": "Colima",
+    "description": "The local container runtime layer installed on my Mac.",
+    "url": "https://github.com/abiosoft/colima",
+    "group": "infrastructure",
+    "order": 6
+  },
+  {
+    "id": "github-actions",
+    "slug": "github-actions",
+    "name": "GitHub Actions",
+    "description": "The CI and scheduled automation layer for my repositories.",
+    "url": "https://github.com/features/actions",
+    "logo": "/images/stack/github-actions.svg",
+    "monochrome": true,
+    "group": "infrastructure",
+    "order": 7
+  },
+  {
+    "id": "tailscale",
+    "slug": "tailscale",
+    "name": "Tailscale",
+    "description": "The private networking tool installed in my local environment.",
+    "url": "https://tailscale.com/",
+    "group": "infrastructure",
+    "order": 8,
+    "logo": "/images/stack/tailscale.svg",
+    "monochrome": true
+  },
+  {
+    "id": "aws",
+    "slug": "aws",
+    "name": "AWS",
+    "description": "Cloud services and SDKs used by the Affitor CMS.",
+    "url": "https://aws.amazon.com/",
+    "group": "infrastructure",
+    "order": 9,
+    "logo": "/images/stack/aws.svg"
+  },
+  {
+    "id": "fly-io",
+    "slug": "fly-io",
+    "name": "Fly.io",
+    "description": "A deployment CLI kept in my infrastructure toolchain.",
+    "url": "https://fly.io/",
+    "group": "infrastructure",
+    "order": 10,
+    "logo": "/images/stack/fly-io.svg"
+  },
+  {
+    "id": "supabase",
+    "slug": "supabase",
+    "name": "Supabase",
+    "description": "The database platform connected to Kyma and Affitor applications.",
+    "url": "https://supabase.com/",
+    "group": "data-storage",
+    "order": 1,
+    "logo": "/images/stack/supabase.svg"
+  },
+  {
+    "id": "postgresql",
+    "slug": "postgresql",
+    "name": "PostgreSQL",
+    "description": "The relational database used by active web products.",
+    "url": "https://www.postgresql.org/",
+    "group": "data-storage",
+    "order": 2,
+    "logo": "/images/stack/postgresql.svg"
+  },
+  {
+    "id": "redis",
+    "slug": "redis",
+    "name": "Redis",
+    "description": "The key-value store used by Kyma services and local tooling.",
+    "url": "https://redis.io/",
+    "group": "data-storage",
+    "order": 3,
+    "logo": "/images/stack/redis.svg"
+  },
+  {
+    "id": "duckdb",
+    "slug": "duckdb",
+    "name": "DuckDB",
+    "description": "The local analytical database installed in my data toolchain.",
+    "url": "https://duckdb.org/",
+    "logo": "/images/stack/duckdb.svg",
+    "monochrome": true,
+    "group": "data-storage",
+    "order": 4
+  },
+  {
+    "id": "firebase",
+    "slug": "firebase",
+    "name": "Firebase",
+    "description": "A data and application service used by Affitor.",
+    "url": "https://firebase.google.com/",
+    "group": "data-storage",
+    "order": 5,
+    "logo": "/images/stack/firebase.svg"
+  },
+  {
+    "id": "vercel-blob",
+    "slug": "vercel-blob",
+    "name": "Vercel Blob",
+    "description": "Object storage used by the Kyma application.",
+    "url": "https://vercel.com/storage/blob",
+    "group": "data-storage",
+    "order": 6,
+    "logo": "/images/stack/vercel.svg",
+    "monochrome": true
+  },
+  {
+    "id": "stripe",
+    "slug": "stripe",
+    "name": "Stripe",
+    "description": "The payment platform connected to Kyma and Affitor.",
+    "url": "https://stripe.com/",
+    "group": "business",
+    "order": 1,
+    "logo": "/images/stack/stripe.svg"
+  },
+  {
+    "id": "hubspot",
+    "slug": "hubspot",
+    "name": "HubSpot",
+    "description": "A connected CRM tool in my operating stack.",
+    "url": "https://www.hubspot.com/",
+    "logo": "/images/stack/hubspot.svg",
+    "monochrome": true,
+    "group": "business",
+    "order": 2
+  },
+  {
+    "id": "clay",
+    "slug": "clay",
+    "name": "Clay",
+    "description": "A connected research and go-to-market tool.",
+    "url": "https://www.clay.com/",
+    "group": "business",
+    "order": 3
+  },
+  {
+    "id": "doppler",
+    "slug": "doppler",
+    "name": "Doppler",
+    "description": "The secrets-management CLI installed in my development toolchain.",
+    "url": "https://www.doppler.com/",
+    "group": "business",
+    "order": 4,
+    "logo": "/images/stack/doppler.svg"
+  },
+  {
+    "id": "resend",
+    "slug": "resend",
+    "name": "Resend",
+    "description": "The email delivery service connected to my products.",
+    "url": "https://resend.com/",
+    "logo": "/images/stack/resend.svg",
+    "monochrome": true,
+    "group": "communication",
+    "order": 1
+  },
+  {
+    "id": "agentmail",
+    "slug": "agentmail",
+    "name": "AgentMail",
+    "description": "An email service connected for agent workflows.",
+    "url": "https://www.agentmail.to/",
+    "group": "communication",
+    "order": 2
+  },
+  {
+    "id": "slack",
+    "slug": "slack",
+    "name": "Slack",
+    "description": "A connected communication tool installed on my Mac.",
+    "url": "https://slack.com/",
+    "group": "communication",
+    "order": 3,
+    "logo": "/images/stack/slack.svg"
+  },
+  {
+    "id": "posthog",
+    "slug": "posthog",
+    "name": "PostHog",
+    "description": "The product analytics and web-performance layer used on this site.",
+    "url": "https://posthog.com/",
+    "group": "analytics-seo",
+    "order": 1,
+    "logo": "/images/stack/posthog.svg"
+  },
+  {
+    "id": "ahrefs",
+    "slug": "ahrefs",
+    "name": "Ahrefs",
+    "description": "A connected tool for search and site research.",
+    "url": "https://ahrefs.com/",
+    "group": "analytics-seo",
+    "order": 2
+  },
+  {
+    "id": "google-search-console",
+    "slug": "google-search-console",
+    "name": "Google Search Console",
+    "description": "The search-performance source used by Kyma reporting scripts.",
+    "url": "https://search.google.com/search-console/about",
+    "group": "analytics-seo",
+    "order": 3,
+    "logo": "/images/stack/google-search-console.svg"
+  },
+  {
+    "id": "canva",
+    "slug": "canva",
+    "name": "Canva",
+    "description": "A connected design tool in my content workflow.",
+    "url": "https://www.canva.com/",
+    "group": "design-content",
+    "order": 1
+  },
+  {
+    "id": "figma",
+    "slug": "figma",
+    "name": "Figma",
+    "description": "A connected interface-design tool.",
+    "url": "https://www.figma.com/",
+    "group": "design-content",
+    "order": 2,
+    "logo": "/images/stack/figma.svg"
+  },
+  {
+    "id": "gamma",
+    "slug": "gamma",
+    "name": "Gamma",
+    "description": "A connected tool for producing presentation and document drafts.",
+    "url": "https://gamma.app/",
+    "group": "design-content",
+    "order": 3
+  },
+  {
+    "id": "v0",
+    "slug": "v0",
+    "name": "v0",
+    "description": "A connected interface prototyping tool.",
+    "url": "https://v0.dev/",
+    "group": "design-content",
+    "order": 4,
+    "logo": "/images/stack/v0.svg",
+    "monochrome": true
+  },
+  {
+    "id": "capcut",
+    "slug": "capcut",
+    "name": "CapCut",
+    "description": "A desktop editor installed for video work.",
+    "url": "https://www.capcut.com/",
+    "group": "design-content",
+    "order": 5,
+    "logo": "/images/stack/capcut.svg",
+    "monochrome": true
+  },
+  {
+    "id": "screen-studio",
+    "slug": "screen-studio",
+    "name": "Screen Studio",
+    "description": "A desktop tool installed for recording product demonstrations.",
+    "url": "https://www.screen.studio/",
+    "group": "design-content",
+    "order": 6
+  },
+  {
+    "id": "obs",
+    "slug": "obs",
+    "name": "OBS",
+    "description": "A desktop tool installed for screen recording and streaming.",
+    "url": "https://obsproject.com/",
+    "logo": "/images/stack/obs.svg",
+    "monochrome": true,
+    "group": "design-content",
+    "order": 7
+  },
+  {
+    "id": "notion",
+    "slug": "notion",
+    "name": "Notion",
+    "description": "A connected workspace for notes and operating documents.",
+    "url": "https://www.notion.so/",
+    "group": "planning-knowledge",
+    "order": 1,
+    "logo": "/images/stack/notion.svg",
+    "monochrome": true
+  },
+  {
+    "id": "linear",
+    "slug": "linear",
+    "name": "Linear",
+    "description": "A connected tool for product and issue planning.",
+    "url": "https://linear.app/",
+    "group": "planning-knowledge",
+    "order": 2,
+    "logo": "/images/stack/linear.svg",
+    "monochrome": true
+  },
+  {
+    "id": "granola",
+    "slug": "granola",
+    "name": "Granola",
+    "description": "A connected desktop tool for meeting notes.",
+    "url": "https://www.granola.ai/",
+    "group": "planning-knowledge",
+    "order": 3
+  },
+  {
+    "id": "obsidian",
+    "slug": "obsidian",
+    "name": "Obsidian",
+    "description": "A local notes application installed on my Mac.",
+    "url": "https://obsidian.md/",
+    "group": "planning-knowledge",
+    "order": 4,
+    "logo": "/images/stack/obsidian.svg"
+  },
+  {
+    "id": "kyma-api",
+    "slug": "kyma-api",
+    "name": "Kyma API",
+    "description": "The unified AI API I built and use across agent workflows.",
+    "url": "https://kymaapi.com/",
+    "group": "tools-built",
+    "order": 1,
+    "logo": "/images/projects/kyma.svg",
+    "monochrome": true
+  },
+  {
+    "id": "affitor",
+    "slug": "affitor",
+    "name": "Affitor",
+    "description": "The affiliate platform I built for products and partners.",
+    "url": "https://affitor.com/",
+    "group": "tools-built",
+    "order": 2,
+    "logo": "/images/projects/affitor.svg"
+  },
+  {
+    "id": "build-to-own",
+    "slug": "build-to-own",
+    "name": "Build to Own",
+    "description": "The operating system I built for turning repeatable work into owned products.",
+    "url": "https://buildtoown.com/",
+    "group": "tools-built",
+    "order": 3,
+    "logo": "/images/projects/build-to-own.svg",
+    "monochrome": true
+  },
+  {
+    "id": "kapt",
+    "slug": "kapt",
+    "name": "Kapt",
+    "description": "The screenshot tool I use to capture, annotate, and review product changes.",
+    "url": "https://github.com/sonpiaz/kapt",
+    "group": "tools-built",
+    "order": 4,
+    "logo": "/images/stack/kapt.png"
+  },
+  {
+    "id": "watch-cli",
+    "slug": "watch-cli",
+    "name": "Watch CLI",
+    "description": "The command-line watcher I built for monitoring agent work.",
+    "url": "https://github.com/sonpiaz/watch-cli",
+    "group": "tools-built",
+    "order": 5
   }
 ]

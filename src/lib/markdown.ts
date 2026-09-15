@@ -2,6 +2,7 @@ import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { firstParagraph, isoDate, projectSections, projectUpdated, productFor, site, sourceUpdated, entityId } from './site';
 import { aboutProjectSlugs, compareProjects } from './projects';
 import { compareStackEntries, stackUrl } from './stack';
+import { stackGroups } from './stack-groups';
 
 const heading = (title: string, path: string) => `# ${title}\n\nSource: ${site}${path}\nID: ${entityId(path)}\n\n`;
 const evidence = (item: { claim: string; source?: string }) => item.source ? `[${item.claim}](${item.source})` : item.claim;
@@ -50,7 +51,8 @@ export async function markdownDocuments() {
   const stack = pages.find(page => page.id === 'stack')!;
   documents.set('stack', heading(stack.data.title!, '/stack')
     + `Updated: ${isoDate(sourceUpdated('content/pages/stack.md'))}\n\n${stack.data.description}\n\n`
-    + `## Tools\n\n${stackEntries.map(entry => `- [${entry.data.name}](${stackUrl(entry)}): ${entry.data.description}`).join('\n')}\n\n`
+    + stackGroups.map(group => `## ${group.label}\n\n${stackEntries.filter(entry => entry.data.group === group.id).map(entry => `- [${entry.data.name}](${stackUrl(entry)}): ${entry.data.description}`).join('\n')}`).join('\n\n')
+    + `\n\n`
     + `${stack.body?.trim() || ''}\n`);
   const writing = posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}) (${isoDate(data.date)})`).join('\n');
   const home = pages.find(page => page.id === 'home')!;
@@ -80,7 +82,10 @@ export async function llmsSummary() {
   const stackEntries = (await getCollection('stack')).sort(compareStackEntries);
   return `# Son Piaz\n\n> ${home.data.headline} ${firstParagraph(home.body).split(/(?<=[.!?])\s+/)[0]}\n\n`
     + [['main', 'Products'], ['side', 'Side projects']].map(([tier, title]) => `## ${title}\n\n` + projects.filter(({ data }) => data.tier === tier).map(({ data }) => `- [${data.name}](${site}/projects/${data.slug}.md): ${data.one_liner} ${data.status}${data.visibility === 'private' ? ' · Private' : ''}. ID: ${entityId(`/projects/${data.slug}`)}`).join('\n')).join('\n\n')
-    + `\n\n## Stack\n\n${stackEntries.map(entry => `- [${entry.data.name}](${stackUrl(entry)}): ${entry.data.description}`).join('\n')}`
+    + `\n\n## Stack\n\n${stackGroups.map(group => {
+      const count = stackEntries.filter(entry => entry.data.group === group.id).length;
+      return `- [${group.label}](${site}/stack.md#${group.anchor}): ${count} ${count === 1 ? 'tool' : 'tools'}`;
+    }).join('\n')}\n\n- [Full grouped stack](${site}/stack.md) · ID: ${entityId('/stack')}`
     + `\n\n## Writing\n\n${posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description}${data.quote ? ` Quote: "${data.quote}"` : ''} ID: ${entityId(`/writing/${data.slug}`)}`).join('\n')}`
     + `\n\n## Pages\n\n- [Home](${site}/index.md) · ID: ${entityId('/')}\n- [All projects](${site}/projects.md) · ID: ${entityId('/projects')}\n- [All writing](${site}/writing.md) · ID: ${entityId('/writing')}\n${pages.map(page => `- [${page.data.title}](${site}/${page.id}.md) · ID: ${entityId(`/${page.id}`)}`).join('\n')}\n\n## Full text\n\n- [Full content](${site}/llms-full.txt)\n`;
 }
