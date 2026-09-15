@@ -83,6 +83,23 @@ export function checkSiteDetails(root = process.cwd()) {
   assert(/src="\/github-contributions\.svg"[^>]*width="680"[^>]*height="114"[^>]*loading="lazy"/.test(stackHtml), 'Contribution graph lacks its self-hosted fixed-size lazy image');
   assert(existsSync(join(root, 'public/github-contributions.svg')), 'Generated contribution SVG is missing');
   assert(/src="\/images\/son-piaz\.webp"[^>]*width="160"[^>]*height="160"[^>]*alt="Son Piaz speaking into a microphone"/.test(read('dist/about/index.html')), 'About portrait markup differs');
+  const ogImage = readFileSync(join(root, 'public/og-default.png'));
+  assert.equal(ogImage.readUInt32BE(0), 0x89504e47, 'Default OG image is not a PNG');
+  assert.equal(ogImage.readUInt32BE(16), 1200, 'Default OG image width differs');
+  assert.equal(ogImage.readUInt32BE(20), 630, 'Default OG image height differs');
+  assert(ogImage.byteLength < 1_000_000, 'Default OG image exceeds 1 MB');
+  for (const path of files(root, 'dist').filter(path => path.endsWith('.html'))) {
+    const html = read(path);
+    assert(/<meta property="og:title" content="[^"]+">/.test(html), `Missing og:title: ${path}`);
+    assert(/<meta property="og:description" content="[^"]+">/.test(html), `Missing og:description: ${path}`);
+    assert(/<meta property="og:url" content="https:\/\/sonpiaz\.com\/[^"]*">/.test(html), `Missing absolute og:url: ${path}`);
+    assert(html.includes('<meta property="og:image" content="https://sonpiaz.com/og-default.png">'), `Missing default og:image: ${path}`);
+    assert(html.includes('<meta property="og:image:width" content="1200">'), `Missing OG width: ${path}`);
+    assert(html.includes('<meta property="og:image:height" content="630">'), `Missing OG height: ${path}`);
+    assert(html.includes('<meta property="og:image:type" content="image/png">'), `Missing OG type: ${path}`);
+    assert(html.includes('<meta name="twitter:card" content="summary_large_image">'), `Missing Twitter card: ${path}`);
+    assert(html.includes('<meta name="twitter:image" content="https://sonpiaz.com/og-default.png">'), `Missing Twitter image: ${path}`);
+  }
   const css = read('src/styles/global.css');
   assert(/\.about-avatar\s*\{[^}]*filter:\s*grayscale\(1\)/s.test(css), 'About portrait is not grayscale');
   assert(/@media \(max-width: 599px\)[\s\S]*\.about-avatar\s*\{[^}]*width:\s*112px;[^}]*height:\s*112px;/s.test(css), 'About portrait mobile dimensions differ');
