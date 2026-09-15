@@ -4,7 +4,19 @@ import { getEntry, type CollectionEntry } from 'astro:content';
 
 export const site = 'https://sonpiaz.com';
 export const entityId = (path: string) => `${site}${path.replace(/\/$/, '') || '/'}#entity`;
-export const person = { '@type': 'Person', '@id': `${site}/#person`, name: 'Son Piaz', url: `${site}/` };
+export const person = {
+  '@type': 'Person',
+  '@id': `${site}/#person`,
+  name: 'Son Piaz',
+  url: `${site}/`,
+  image: `${site}/images/son-piaz.webp`,
+  sameAs: [
+    'https://x.com/sonxpiaz',
+    'https://github.com/sonpiaz',
+    'https://linkedin.com/in/sonpiaz',
+    'https://www.youtube.com/sonpiaz',
+  ],
+};
 export const monthYear = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 export const fullDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 export const isoDate = (date: Date) => date.toISOString().slice(0, 10);

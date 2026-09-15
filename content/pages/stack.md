@@ -1,13 +1,9 @@
 ---
-title: How these fit together
-description: Five products that are really one loop. Agents run in Mandeck, call Kyma for models, build things that need distribution, and Build to Own teaches the whole circuit.
+title: Stack
+description: The tools I use to build, review, measure, and publish software.
 ---
 
-There are more projects on this site than one person should have. The reason is
-not ambition. Each one started as a problem inside the one before it, and the
-shortest way to describe the whole set is as a loop rather than a list.
-
-## The loop
+## How these fit together
 
 <figure class="diagram">
 <svg viewBox="0 0 420 660" role="img" aria-label="Five products arranged as a loop: Build to Own teaches builders, who run agents in Mandeck, which call Kyma API for models, which produce things that need distribution through Affitor and open-affiliate, and what works becomes the Build to Own syllabus." xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
@@ -52,18 +48,8 @@ shortest way to describe the whole set is as a loop rather than a list.
 <figcaption>People enter through the program and leave running the stack. The blue arrow is what makes it a loop.</figcaption>
 </figure>
 
-**1. Learn the circuit.** [Build to Own](/projects/build-to-own) takes a builder from a real problem to a paid product in four weeks.
-
-**2. Run the agents.** [Mandeck](/projects/mandeck) holds many coding agents on one screen and lets them hand work to each other.
-
-**3. Call the models.** [Kyma API](/projects/kyma) gives those agents one key for a hundred models, with uptime you can check.
-
-**4. Build something.** The side projects came out of this step: [watch-cli](/projects/watch-cli), [Haynoi](/projects/haynoi), [Pheme](/projects/pheme), [Kapt](/projects/kapt).
-
-**5. Reach people.** [Affitor](/projects/affitor) tracks and pays partners, [open-affiliate](/projects/open-affiliate) publishes the terms, [affiliate-skills](/projects/affiliate-skills) gives an agent the playbook. What works goes back into the syllabus.
-
-## Why this matters if you only read one page
-
-Every product here is the answer to a question the previous one asked. That is
-worth more than any of them individually, because it means the tools are tested
-by each other every day rather than by a demo.
+[Build to Own](/projects/build-to-own) teaches the circuit.
+[Mandeck](/projects/mandeck) is where the agents run, and
+[Kyma API](/projects/kyma) supplies the models. The things they build need
+distribution through [Affitor](/projects/affitor) and
+[open-affiliate](/projects/open-affiliate). What works returns to the syllabus.

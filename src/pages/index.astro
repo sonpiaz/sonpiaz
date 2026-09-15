@@ -5,10 +5,11 @@ import ProjectList from '../components/ProjectList.astro';
 import WritingList from '../components/WritingList.astro';
 import Heading from '../components/Heading.astro';
 import { person, site, monthYear } from '../lib/site';
+import { compareProjects } from '../lib/projects';
 
 const home = (await getEntry('pages', 'home'))!;
 const { Content } = await render(home);
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).sort(compareProjects);
 const posts = await getCollection('posts');
 const main = projects.filter(({ data }) => data.tier === 'main');
 const side = projects.filter(({ data }) => data.tier === 'side' && data.featured);

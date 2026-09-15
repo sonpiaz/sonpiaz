@@ -1,9 +1,10 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { firstParagraph, isoDate, projectSections, projectUpdated, productFor, site, sourceUpdated, entityId } from './site';
+import { aboutProjectSlugs, compareProjects } from './projects';
+import { compareStackEntries, stackUrl } from './stack';
 
 const heading = (title: string, path: string) => `# ${title}\n\nSource: ${site}${path}\nID: ${entityId(path)}\n\n`;
 const evidence = (item: { claim: string; source?: string }) => item.source ? `[${item.claim}](${item.source})` : item.claim;
-const compareProjects = (a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => Number(a.data.tier === 'side') - Number(b.data.tier === 'side') || a.data.order - b.data.order || a.data.slug.localeCompare(b.data.slug);
 
 export function projectMarkdown(project: CollectionEntry<'projects'>, posts: CollectionEntry<'posts'>[]) {
   const { data } = project;
@@ -21,7 +22,7 @@ export async function postMarkdown(post: CollectionEntry<'posts'>) {
   const { data } = post;
   const product = await productFor(post);
   return heading(data.title, `/writing/${data.slug}`)
-    + `Date: ${isoDate(data.date)}\n\n${data.description}\n\n`
+    + `Date: ${isoDate(data.date)}\n${data.source_url ? `Original source: ${data.source_url}\n` : ''}\n${data.description}\n\n`
     + (data.quote ? `> ${data.quote}\n\n` : '')
     + `${post.body?.trim() || ''}\n`
     + (product ? `\n## The problem this came from\n\n${data.problem}\n\n[${product.data.name}](${site}/projects/${product.data.slug}) · ${product.data.status}\n\n${product.data.one_liner}\n\n→ ${site}/projects/${product.data.slug}\n` : '');
@@ -31,13 +32,26 @@ export async function markdownDocuments() {
   const projects = (await getCollection('projects')).sort(compareProjects);
   const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   const pages = await getCollection('pages');
+  const stackEntries = (await getCollection('stack')).sort(compareStackEntries);
   const documents = new Map<string, string>();
+  const projectRow = ({ data }: CollectionEntry<'projects'>) => `- [${data.name}](${site}/projects/${data.slug}): ${data.one_liner} Status: ${data.status}${data.visibility === 'private' ? ' · Private' : ''}. ${evidence(data.evidence[0])}`;
   for (const project of projects) documents.set(`projects/${project.data.slug}`, projectMarkdown(project, posts));
   for (const post of posts) documents.set(`writing/${post.data.slug}`, await postMarkdown(post));
-  for (const page of pages.filter(page => page.id !== 'home')) {
+  for (const page of pages.filter(page => !['home', 'about', 'stack'].includes(page.id))) {
     documents.set(page.id, heading(page.data.title!, `/${page.id}`) + `Updated: ${isoDate(sourceUpdated(`content/pages/${page.id}.md`))}\n\n` + (page.data.description ? `${page.data.description}\n\n` : '') + `${page.body?.trim() || ''}\n`);
   }
-  const projectRow = ({ data }: CollectionEntry<'projects'>) => `- [${data.name}](${site}/projects/${data.slug}): ${data.one_liner} Status: ${data.status}${data.visibility === 'private' ? ' · Private' : ''}. ${evidence(data.evidence[0])}`;
+  const about = pages.find(page => page.id === 'about')!;
+  const aboutIncluded = new Set<string>(aboutProjectSlugs);
+  const aboutProjects = projects.filter(project => aboutIncluded.has(project.data.slug));
+  documents.set('about', heading(about.data.title!, '/about')
+    + `Updated: ${isoDate(sourceUpdated('content/pages/about.md'))}\n\n${about.body?.trim() || ''}\n\n`
+    + `## What I have shipped\n\n### Products\n\n${aboutProjects.filter(project => project.data.tier === 'main').map(projectRow).join('\n')}\n\n`
+    + `### Side projects and skills\n\n${aboutProjects.filter(project => project.data.tier === 'side').map(projectRow).join('\n')}\n`);
+  const stack = pages.find(page => page.id === 'stack')!;
+  documents.set('stack', heading(stack.data.title!, '/stack')
+    + `Updated: ${isoDate(sourceUpdated('content/pages/stack.md'))}\n\n${stack.data.description}\n\n`
+    + `## Tools\n\n${stackEntries.map(entry => `- [${entry.data.name}](${stackUrl(entry)}): ${entry.data.description}`).join('\n')}\n\n`
+    + `${stack.body?.trim() || ''}\n`);
   const writing = posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}) (${isoDate(data.date)})`).join('\n');
   const home = pages.find(page => page.id === 'home')!;
   const projectsUpdated = new Date(Math.max(sourceUpdated('src/pages/projects/index.astro').valueOf(), ...projects.map(project => projectUpdated(project).valueOf())));
@@ -63,8 +77,10 @@ export async function llmsSummary() {
   const projects = (await getCollection('projects')).sort(compareProjects);
   const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   const pages = (await getCollection('pages')).filter(page => page.id !== 'home');
+  const stackEntries = (await getCollection('stack')).sort(compareStackEntries);
   return `# Son Piaz\n\n> ${home.data.headline} ${firstParagraph(home.body).split(/(?<=[.!?])\s+/)[0]}\n\n`
-    + [['main', 'Products'], ['side', 'Side projects']].map(([tier, title]) => `## ${title}\n\n` + projects.filter(({ data }) => data.tier === tier).map(({ data }) => `- [${data.name}](${site}/projects/${data.slug}.md): ${data.one_liner} Status: ${data.status}${data.visibility === 'private' ? ' · Private' : ''}. ${evidence(data.evidence[0])} ID: ${entityId(`/projects/${data.slug}`)}`).join('\n')).join('\n\n')
+    + [['main', 'Products'], ['side', 'Side projects']].map(([tier, title]) => `## ${title}\n\n` + projects.filter(({ data }) => data.tier === tier).map(({ data }) => `- [${data.name}](${site}/projects/${data.slug}.md): ${data.one_liner} ${data.status}${data.visibility === 'private' ? ' · Private' : ''}. ID: ${entityId(`/projects/${data.slug}`)}`).join('\n')).join('\n\n')
+    + `\n\n## Stack\n\n${stackEntries.map(entry => `- [${entry.data.name}](${stackUrl(entry)}): ${entry.data.description}`).join('\n')}`
     + `\n\n## Writing\n\n${posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description}${data.quote ? ` Quote: "${data.quote}"` : ''} ID: ${entityId(`/writing/${data.slug}`)}`).join('\n')}`
     + `\n\n## Pages\n\n- [Home](${site}/index.md) · ID: ${entityId('/')}\n- [All projects](${site}/projects.md) · ID: ${entityId('/projects')}\n- [All writing](${site}/writing.md) · ID: ${entityId('/writing')}\n${pages.map(page => `- [${page.data.title}](${site}/${page.id}.md) · ID: ${entityId(`/${page.id}`)}`).join('\n')}\n\n## Full text\n\n- [Full content](${site}/llms-full.txt)\n`;
 }

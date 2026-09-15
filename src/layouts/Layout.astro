@@ -67,7 +67,18 @@ const linkedData = JSON.stringify({ '@context': 'https://schema.org', '@graph': 
         </nav>
       </header>
       <main id="entity" data-entity-id={id}><slot /></main>
-      <footer class="site-footer"><span>Son Piaz</span> · <a href="https://x.com/sonxpiaz">@sonxpiaz</a> · <a href="https://github.com/sonpiaz">GitHub</a><a class="back-to-top" href="#top">Back to top ↑</a></footer>
+      <footer class="site-footer">
+        <figure class="contribution-graph">
+          <a href="https://github.com/sonpiaz">
+            <img src="/github-contributions.svg" width="680" height="114" loading="lazy" alt="Son Piaz GitHub contributions over the last year" />
+          </a>
+          <figcaption><a href="https://github.com/sonpiaz">View contributions on GitHub</a></figcaption>
+        </figure>
+        <div class="footer-links">
+          <span>Son Piaz</span> · <a href="https://x.com/sonxpiaz">@sonxpiaz</a> · <a href="https://github.com/sonpiaz">GitHub</a> · <a href="https://www.youtube.com/sonpiaz">YouTube</a>
+          <a class="back-to-top" href="#top">Back to top ↑</a>
+        </div>
+      </footer>
     </div>
   </body>
 </html>

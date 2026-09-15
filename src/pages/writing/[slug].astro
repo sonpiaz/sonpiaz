@@ -17,7 +17,7 @@ const { data } = post;
 const { Content } = await render(post);
 const product = await productFor(post);
 const published = isoDate(data.date);
-const jsonLd = [{ '@type': 'Article', '@id': entityId(`/writing/${data.slug}`), headline: data.title, description: data.description, abstract: data.quote, datePublished: published, author: person, mainEntityOfPage: { '@type': 'WebPage', '@id': `${site}/writing/${data.slug}` } }];
+const jsonLd = [{ '@type': 'Article', '@id': entityId(`/writing/${data.slug}`), headline: data.title, description: data.description, abstract: data.quote, datePublished: published, isBasedOn: data.source_url, author: person, mainEntityOfPage: { '@type': 'WebPage', '@id': `${site}/writing/${data.slug}` } }];
 ---
 
 <Layout title={data.title} description={data.description} articleDate={published} jsonLd={jsonLd}>

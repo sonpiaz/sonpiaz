@@ -1,25 +1,35 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { compareProjects, projectLogos } from '../lib/projects';
 
 interface Props {
   projects: CollectionEntry<'projects'>[];
+  compact?: boolean;
 }
 
-const { projects } = Astro.props;
+const { projects, compact = false } = Astro.props;
+const sorted = [...projects].sort(compareProjects);
 ---
 
-<ul class="project-list">
-  {projects.map(({ data }) => (
+<ul class:list={['project-list', { compact }]}>
+  {sorted.map(({ data }) => (
     <li>
       <div class="project-title">
+        {projectLogos[data.slug as keyof typeof projectLogos]?.kind === 'mask'
+          ? <span class="project-logo project-logo-mask" style={`--logo: url("${projectLogos[data.slug as keyof typeof projectLogos]!.src}")`} aria-hidden="true"></span>
+          : projectLogos[data.slug as keyof typeof projectLogos]
+            ? <img class="project-logo" src={projectLogos[data.slug as keyof typeof projectLogos]!.src} width="20" height="20" alt="" />
+            : null}
         <a href={`/projects/${data.slug}`}>{data.name}</a>
         <span class="meta">{data.status}</span>
         {data.visibility === 'private' && <span class="meta">Private</span>}
       </div>
-      <p class="one-liner">{data.one_liner}</p>
-      <p class="evidence-summary">
-        {data.evidence[0].source ? <a href={data.evidence[0].source}>{data.evidence[0].claim}</a> : data.evidence[0].claim}
-      </p>
+      {!compact && <>
+        <p class="one-liner">{data.one_liner}</p>
+        <p class="evidence-summary">
+          {data.evidence[0].source ? <a href={data.evidence[0].source}>{data.evidence[0].claim}</a> : data.evidence[0].claim}
+        </p>
+      </>}
     </li>
   ))}
 </ul>

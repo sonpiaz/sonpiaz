@@ -1,0 +1,104 @@
+[
+  {
+    "id": "mandeck",
+    "slug": "mandeck",
+    "name": "Mandeck",
+    "description": "The macOS workspace where I run coding agents side by side and hand work between them.",
+    "url": "https://mandeck.dev/",
+    "logo": "/images/projects/mandeck.png",
+    "order": 1
+  },
+  {
+    "id": "cursor",
+    "slug": "cursor",
+    "name": "Cursor",
+    "description": "The editor I use when repository work needs the code, terminal, and browser in one place.",
+    "url": "https://cursor.com/",
+    "order": 2
+  },
+  {
+    "id": "claude-code",
+    "slug": "claude-code",
+    "name": "Claude Code",
+    "description": "The coding agent I use for specifications, reviews, and long repository investigations.",
+    "url": "https://www.anthropic.com/claude-code",
+    "order": 3
+  },
+  {
+    "id": "codex",
+    "slug": "codex",
+    "name": "Codex",
+    "description": "The coding agent I use for bounded construction work from a written brief.",
+    "url": "https://openai.com/codex/",
+    "order": 4
+  },
+  {
+    "id": "github",
+    "slug": "github",
+    "name": "GitHub",
+    "description": "The source, pull request, review, and CI layer for the software I publish.",
+    "url": "https://github.com/",
+    "logo": "/images/stack/github.svg",
+    "order": 5
+  },
+  {
+    "id": "astro",
+    "slug": "astro",
+    "name": "Astro",
+    "description": "The static framework that builds this site from one set of Markdown content.",
+    "url": "https://astro.build/",
+    "order": 6
+  },
+  {
+    "id": "xcode",
+    "slug": "xcode",
+    "name": "Xcode",
+    "description": "The build and signing tool for the native macOS apps I ship.",
+    "url": "https://developer.apple.com/xcode/",
+    "order": 7
+  },
+  {
+    "id": "posthog",
+    "slug": "posthog",
+    "name": "PostHog",
+    "description": "The product analytics and web-performance layer used on this site.",
+    "url": "https://posthog.com/",
+    "logo": "/images/stack/posthog.svg",
+    "order": 8
+  },
+  {
+    "id": "kapt",
+    "slug": "kapt",
+    "name": "Kapt",
+    "description": "The screenshot tool I use to capture, annotate, and review product changes.",
+    "url": "https://github.com/sonpiaz/kapt",
+    "logo": "/images/stack/kapt.png",
+    "order": 9
+  },
+  {
+    "id": "python",
+    "slug": "python",
+    "name": "Python",
+    "description": "The language behind audits, content tooling, and small automation scripts.",
+    "url": "https://www.python.org/",
+    "logo": "/images/stack/python.svg",
+    "order": 10
+  },
+  {
+    "id": "typescript",
+    "slug": "typescript",
+    "name": "TypeScript",
+    "description": "The language used across site tooling, APIs, and product interfaces.",
+    "url": "https://www.typescriptlang.org/",
+    "logo": "/images/stack/typescript.svg",
+    "order": 11
+  },
+  {
+    "id": "vercel",
+    "slug": "vercel",
+    "name": "Vercel",
+    "description": "The deployment platform that publishes this static site from its reviewed main branch.",
+    "url": "https://vercel.com/",
+    "order": 12
+  }
+]

@@ -9,8 +9,8 @@ I build infrastructure for people who run AI agents.
 | | |
 |---|---|
 | [**Kyma API**](https://kymaapi.com) | One key for 100+ models, with uptime you can check. |
-| [**Mandeck**](https://mandeck.dev) | Run a team of coding agents on one screen. |
 | [**Affitor**](https://affitor.com) | Launch a partner program without building the tracking. |
+| [**Mandeck**](https://mandeck.dev) | Run a team of coding agents on one screen. |
 | [**Build to Own**](https://build2own.dev) | Ship a product people pay for, in four weeks. |
 
 ### Side projects
@@ -25,4 +25,4 @@ I build infrastructure for people who run AI agents.
 | [**Kapt**](https://github.com/sonpiaz/kapt) | Screenshot, annotate and copy the text in one app. | ![Stars](https://img.shields.io/github/stars/sonpiaz/kapt?style=flat) |
 | [**echoly**](https://github.com/sonpiaz/echoly) | Hear any YouTube video in your language. | ![Stars](https://img.shields.io/github/stars/sonpiaz/echoly?style=flat) |
 
-<sub>Bay Area · <a href="https://sonpiaz.com/projects">All projects</a> · <a href="https://sonpiaz.com/stack">How they fit together</a></sub>
+<sub>Bay Area · <a href="https://sonpiaz.com/projects">All projects</a> · <a href="https://sonpiaz.com/stack">Stack</a></sub>

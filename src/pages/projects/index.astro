@@ -3,8 +3,9 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ProjectList from '../../components/ProjectList.astro';
 import Heading from '../../components/Heading.astro';
+import { compareProjects } from '../../lib/projects';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).sort(compareProjects);
 const statuses = ['Live', 'Building', 'Paused', 'Archived', 'Sold'];
 const tiers = [['main', 'Products'], ['side', 'Side projects']];
 const description = tiers.map(([tier, label]) => `${label}: ${projects.filter(({ data }) => data.tier === tier).map(({ data }) => data.name).join(', ')}.`).join(' ');
