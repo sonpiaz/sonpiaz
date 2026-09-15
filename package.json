@@ -5,11 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run generate:contributions && astro build",
     "preview": "astro preview",
+    "generate:contributions": "node scripts/github-contributions.mjs",
+    "update:contributions-snapshot": "node scripts/github-contributions.mjs --update-snapshot",
     "check:agent-surface": "node scripts/check-agent-surface.mjs",
     "test:agent-surface": "node scripts/test-agent-surface.mjs",
-    "verify:agent-surface": "npm run build && npm run check:agent-surface && npm run test:agent-surface"
+    "check:site-details": "node scripts/check-site-details.mjs",
+    "test:site-details": "node scripts/test-site-details.mjs",
+    "verify:agent-surface": "npm run build && npm run check:agent-surface && npm run test:agent-surface",
+    "verify:site": "npm run build && npm run check:agent-surface && npm run check:site-details && npm run test:agent-surface && npm run test:site-details"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.0",

@@ -17,8 +17,8 @@ export function fingerprint(root, paths) {
   return Object.fromEntries([...paths].sort().map(path => [path, hash(readFileSync(join(root, path)))]));
 }
 export function sourceState(root) {
-  const paths = ['content', 'src', 'scripts', 'public', '.github'].flatMap(folder => files(root, folder));
-  paths.push('package.json', 'package-lock.json', 'astro.config.ts', 'tsconfig.json');
+  const paths = ['content', 'data', 'src', 'scripts', 'public', '.github', 'intent'].flatMap(folder => files(root, folder));
+  paths.push('README.md', 'package.json', 'package-lock.json', 'astro.config.ts', 'tsconfig.json');
   if (existsSync(join(root, 'vercel.json'))) paths.push('vercel.json');
   const inputs = fingerprint(root, paths);
   const generator = Object.fromEntries(Object.entries(inputs).filter(([path]) => !path.startsWith('content/')));

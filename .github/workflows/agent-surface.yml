@@ -23,4 +23,4 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run verify:agent-surface
+      - run: npm run verify:site

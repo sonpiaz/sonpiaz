@@ -1,5 +1,5 @@
 import { defineCollection, reference, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 
 const projects = defineCollection({
   loader: glob({ pattern: '!(_)*.md', base: './content/projects' }),
@@ -36,6 +36,7 @@ const posts = defineCollection({
     product: reference('projects').optional(),
     problem: z.string().optional(),
     quote: z.string().optional(),
+    source_url: z.string().url().optional(),
   }),
 });
 
@@ -54,4 +55,17 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { projects, posts, pages };
+const stack = defineCollection({
+  loader: file('content/stack.json'),
+  schema: z.object({
+    id: z.string().regex(/^[a-z0-9-]+$/),
+    slug: z.string().regex(/^[a-z0-9-]+$/),
+    name: z.string(),
+    description: z.string(),
+    url: z.string().url(),
+    logo: z.string().regex(/^\/images\/(?:projects|stack)\/[a-z0-9.-]+$/).optional(),
+    order: z.number().int().nonnegative(),
+  }).refine(data => data.id === data.slug, 'Stack id and slug must match'),
+});
+
+export const collections = { projects, posts, pages, stack };

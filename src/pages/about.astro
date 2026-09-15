@@ -1,15 +1,30 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import { firstParagraph } from '../lib/site';
+import Heading from '../components/Heading.astro';
+import ProjectList from '../components/ProjectList.astro';
+import { firstParagraph, person } from '../lib/site';
+import { aboutProjectSlugs, compareProjects } from '../lib/projects';
 
 const about = (await getEntry('pages', 'about'))!;
 const { Content } = await render(about);
+const included = new Set<string>(aboutProjectSlugs);
+const shipped = (await getCollection('projects'))
+  .filter(project => included.has(project.data.slug))
+  .sort(compareProjects);
+const products = shipped.filter(project => project.data.tier === 'main');
+const sideProjects = shipped.filter(project => project.data.tier === 'side');
 ---
 
-<Layout title={about.data.title} description={about.data.description || firstParagraph(about.body)}>
+<Layout title={about.data.title} description={about.data.description || firstParagraph(about.body)} jsonLd={[person]}>
   <article class="prose">
     <h1>{about.data.title}</h1>
+    <img class="about-avatar" src="/images/son-piaz.webp" width="160" height="160" alt="Son Piaz speaking into a microphone" />
     <Content />
+    <Heading text="What I have shipped" />
+    <Heading level="h3" text="Products" />
+    <ProjectList projects={products} compact />
+    <Heading level="h3" text="Side projects and skills" />
+    <ProjectList projects={sideProjects} compact />
   </article>
 </Layout>
