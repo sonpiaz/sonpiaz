@@ -85,6 +85,18 @@ try {
   writeFileSync(stackPath, stack.replaceAll('utm_source=sonpiaz.com', 'utm_source=example.com'));
   assert.throws(() => checkSiteDetails(fixture), /wrong utm_source/);
   writeFileSync(stackPath, stack);
+  const homePath = join(fixture, 'dist/index.html');
+  const home = readFileSync(homePath, 'utf8');
+  writeFileSync(homePath, home.replace('https://sonpiaz.com/og-default.png', 'https://sonpiaz.com/missing-og.png'));
+  assert.throws(() => checkSiteDetails(fixture), /Missing default og:image/);
+  writeFileSync(homePath, home);
+  const ogPath = join(fixture, 'public/og-default.png');
+  const og = readFileSync(ogPath);
+  const wrongWidth = Buffer.from(og);
+  wrongWidth.writeUInt32BE(1199, 16);
+  writeFileSync(ogPath, wrongWidth);
+  assert.throws(() => checkSiteDetails(fixture), /OG image width differs/);
+  writeFileSync(ogPath, og);
   const aboutPath = join(fixture, 'dist/about.md');
   const about = readFileSync(aboutPath, 'utf8');
   writeFileSync(aboutPath, about.replaceAll('/projects/affitor', '/projects/z-affitor'));
@@ -93,7 +105,7 @@ try {
   checkSiteDetails(fixture);
   assert.deepEqual(sourceState(root), before, 'Original source changed during site-detail negative tests');
   checkSiteDetails(root);
-  console.log('PASS: contribution schema, size, content-type, status, injection, fallback, Stack UTM, and product-order negative cases fail in isolation; original source remains unchanged.');
+  console.log('PASS: contribution schema, size, content-type, status, injection, fallback, Stack UTM, social image metadata/dimensions, and product-order negative cases fail in isolation; original source remains unchanged.');
 } finally {
   rmSync(fixture, { recursive: true, force: true });
 }
