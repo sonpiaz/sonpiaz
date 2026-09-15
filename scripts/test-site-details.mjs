@@ -97,6 +97,26 @@ try {
   writeFileSync(ogPath, wrongWidth);
   assert.throws(() => checkSiteDetails(fixture), /OG image width differs/);
   writeFileSync(ogPath, og);
+  const stackSourcePath = join(fixture, 'content/stack.json');
+  const stackSource = readFileSync(stackSourcePath, 'utf8');
+  const stackEntries = JSON.parse(stackSource);
+  writeFileSync(stackSourcePath, JSON.stringify(stackEntries.slice(1)));
+  assert.throws(() => checkSiteDetails(fixture), /complete approved inventory/);
+  writeFileSync(stackSourcePath, JSON.stringify(stackEntries.map((entry, index) => index === 1 ? { ...entry, slug: stackEntries[0].slug } : entry)));
+  assert.throws(() => checkSiteDetails(fixture), /slugs must be unique/);
+  writeFileSync(stackSourcePath, JSON.stringify(stackEntries.map((entry, index) => index === 0 ? { ...entry, group: 'unknown' } : entry)));
+  assert.throws(() => checkSiteDetails(fixture), /groups differ or are out of order/);
+  writeFileSync(stackSourcePath, JSON.stringify(stackEntries.map((entry, index) => index === 1 ? { ...entry, order: 1 } : entry)));
+  assert.throws(() => checkSiteDetails(fixture), /group order differs/);
+  writeFileSync(stackSourcePath, JSON.stringify(stackEntries.map((entry, index) => {
+    if (index !== 0) return entry;
+    const { logo, ...withoutLogo } = entry;
+    return withoutLogo;
+  })));
+  assert.throws(() => checkSiteDetails(fixture), /logo coverage differs/);
+  writeFileSync(stackSourcePath, JSON.stringify(stackEntries.map((entry, index) => index === 0 ? { ...entry, name: 'Mercury' } : entry)));
+  assert.throws(() => checkSiteDetails(fixture), /Private Stack candidate was published/);
+  writeFileSync(stackSourcePath, stackSource);
   const aboutPath = join(fixture, 'dist/about.md');
   const about = readFileSync(aboutPath, 'utf8');
   writeFileSync(aboutPath, about.replaceAll('/projects/affitor', '/projects/z-affitor'));
@@ -105,7 +125,7 @@ try {
   checkSiteDetails(fixture);
   assert.deepEqual(sourceState(root), before, 'Original source changed during site-detail negative tests');
   checkSiteDetails(root);
-  console.log('PASS: contribution schema, size, content-type, status, injection, fallback, Stack UTM, social image metadata/dimensions, and product-order negative cases fail in isolation; original source remains unchanged.');
+  console.log('PASS: contribution schema, size, content-type, status, injection, fallback, Stack UTM, social image metadata/dimensions, inventory completeness, group identity/order, logo coverage, private candidates, and product-order negative cases fail in isolation; original source remains unchanged.');
 } finally {
   rmSync(fixture, { recursive: true, force: true });
 }

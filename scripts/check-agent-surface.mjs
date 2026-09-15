@@ -6,12 +6,22 @@ import { files, fingerprint, manifestPath, sourceState } from './agent-surface-p
 
 const providerNames = /\b(?:Vercel|Cloudflare|Netlify|Supabase|Upstash|Neon|Railway|Heroku|DigitalOcean|Hetzner|AWS|Amazon Web Services|Google Cloud|Azure)\b|\b(?:fly\.io|render\.com|vercel\.app|workers\.dev)\b/i;
 const demote = text => text.replace(/^(#{1,4}) /gm, '##$1 ');
-const approvedStackProviderLine = '- [Vercel](https://vercel.com/?utm_source=sonpiaz.com&utm_medium=referral&utm_campaign=stack&utm_content=vercel): The deployment platform that publishes this static site from its reviewed main branch.';
-const withoutApprovedStackProvider = (text, path) => (
-  ['dist/stack.md', 'dist/llms.txt', 'dist/llms-full.txt'].includes(path)
-    ? text.replaceAll(approvedStackProviderLine, '')
-    : text
-);
+const attributedStackUrl = entry => {
+  const url = new URL(entry.url);
+  url.searchParams.set('utm_source', 'sonpiaz.com');
+  url.searchParams.set('utm_medium', 'referral');
+  url.searchParams.set('utm_campaign', 'stack');
+  url.searchParams.set('utm_content', entry.slug);
+  return url.href;
+};
+const withoutApprovedStackProviders = (text, path, root) => {
+  if (!['dist/stack.md', 'dist/llms-full.txt'].includes(path)) return text;
+  const entries = JSON.parse(readFileSync(join(root, 'content/stack.json'), 'utf8'));
+  return entries.reduce(
+    (output, entry) => output.replaceAll(`- [${entry.name}](${attributedStackUrl(entry)}): ${entry.description}`, ''),
+    text,
+  );
+};
 
 export function checkAgentSurface(root = process.cwd()) {
   const read = path => readFileSync(join(root, path), 'utf8');
@@ -28,7 +38,7 @@ export function checkAgentSurface(root = process.cwd()) {
   const htmlUrls = urls.filter(url => !url.endsWith('.md'));
   const mdUrls = urls.filter(url => url.endsWith('.md'));
   const markdownFiles = files(root, 'dist').filter(path => path.endsWith('.md'));
-  for (const file of markdownFiles) assert(!providerNames.test(withoutApprovedStackProvider(read(file), file)), `Infrastructure provider name in Markdown: ${file}`);
+  for (const file of markdownFiles) assert(!providerNames.test(withoutApprovedStackProviders(read(file), file, root)), `Infrastructure provider name in Markdown: ${file}`);
   assert.deepEqual(markdownFiles, mdUrls.map(url => `dist${new URL(url).pathname}`).sort(), 'Orphan or missing Markdown outside sitemap');
   assert.equal(htmlUrls.length, mdUrls.length, 'Sitemap must contain one Markdown twin per HTML page');
   const htmlFiles = files(root, 'dist').filter(path => path.endsWith('.html') && path !== 'dist/404.html');
@@ -73,8 +83,8 @@ export function checkAgentSurface(root = process.cwd()) {
     }
     manifestIds.push(id);
   }
-  assert(!providerNames.test(withoutApprovedStackProvider(summary, 'dist/llms.txt')), 'Infrastructure provider name in llms.txt outside approved Stack entry');
-  assert(!providerNames.test(withoutApprovedStackProvider(full, 'dist/llms-full.txt')), 'Infrastructure provider name in llms-full.txt outside approved Stack entry');
+  assert(!providerNames.test(withoutApprovedStackProviders(summary, 'dist/llms.txt', root)), 'Infrastructure provider name in llms.txt outside approved Stack entry');
+  assert(!providerNames.test(withoutApprovedStackProviders(full, 'dist/llms-full.txt', root)), 'Infrastructure provider name in llms-full.txt outside approved Stack entry');
   const sourceCount = files(root, 'content').filter(path => path.endsWith('.md') && !path.split('/').at(-1).startsWith('_')).length + 2;
   assert.equal(htmlUrls.length, sourceCount, 'Published surface does not cover all content sources and indexes');
   return { html: htmlUrls.length, markdown: mdUrls.length, stableIds: manifestIds.length, llmsBytes: Buffer.byteLength(summary), generator: current.generator.version };

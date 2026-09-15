@@ -87,7 +87,11 @@ img { max-width: 100%; height: auto; }
 figure.diagram { margin: 32px 0; overflow-x: auto; }
 figure.diagram svg { min-width: 382px; max-width: 100%; height: auto; display: block; margin: 0 auto; }
 figure.diagram figcaption { font-size: 12px; color: var(--muted); margin-top: 12px; text-align: center; }
-.stack-table { margin: 32px 0 40px; border-top: 1px solid var(--border); }
+.stack-groups { margin: 32px 0 40px; }
+.stack-group { margin-top: 32px; }
+.stack-group:first-child { margin-top: 0; }
+.stack-group h2 { margin-bottom: 12px; }
+.stack-table { border-top: 1px solid var(--border); }
 .stack-row { display: grid; grid-template-columns: minmax(150px, 0.65fr) minmax(0, 1.35fr); gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--border); }
 .stack-head { color: var(--muted); font-size: 12px; font-weight: 600; }
 .stack-name { display: flex; align-items: center; gap: 10px; min-width: 0; }
