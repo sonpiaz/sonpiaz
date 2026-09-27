@@ -86,7 +86,7 @@ export async function llmsSummary() {
       const count = stackEntries.filter(entry => entry.data.group === group.id).length;
       return `- [${group.label}](${site}/stack.md#${group.anchor}): ${count} ${count === 1 ? 'tool' : 'tools'}`;
     }).join('\n')}\n\n- [Full grouped stack](${site}/stack.md) · ID: ${entityId('/stack')}`
-    + `\n\n## Writing\n\n${posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description}${data.quote ? ` Quote: "${data.quote}"` : ''} ID: ${entityId(`/writing/${data.slug}`)}`).join('\n')}`
+    + `\n\n## Writing\n\n${posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description} ID: ${entityId(`/writing/${data.slug}`)}`).join('\n')}`
     + `\n\n## Pages\n\n- [Home](${site}/index.md) · ID: ${entityId('/')}\n- [All projects](${site}/projects.md) · ID: ${entityId('/projects')}\n- [All writing](${site}/writing.md) · ID: ${entityId('/writing')}\n${pages.map(page => `- [${page.data.title}](${site}/${page.id}.md) · ID: ${entityId(`/${page.id}`)}`).join('\n')}\n\n## Full text\n\n- [Full content](${site}/llms-full.txt)\n`;
 }
 
