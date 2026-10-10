@@ -2,10 +2,10 @@
 title: The answers next door
 slug: the-answers-next-door
 date: 2026-10-09
-description: A dictation feature in my meeting app failed three review rounds in one evening, and every blocking fix was already written down in the code of my other dictation app.
+description: A dictation feature in my meeting app failed three review rounds in one evening, and four of the six blocking findings were answered by comments in my other dictation app.
 product: pheme
-problem: When you build a feature your other app already ships, the old code already holds the bugs you are about to write.
-quote: The reviewer did not find these bugs by thinking harder. It found them by reading Haynoi.
+problem: When you build a feature your other app already ships, the old code can already hold the bugs you are about to write.
+quote: The reviewer did not find the paste and password bugs by thinking harder. It found them by reading Haynoi.
 ---
 
 On Thursday evening I added hold-to-dictate to Pheme, my meeting notes app for macOS. You hold the right Option key, talk, let go, and the words land where your cursor is.
@@ -16,13 +16,11 @@ I also make Haynoi, a Mac app that does exactly this one job. Its code is full o
 
 ## Three rounds
 
-A Grok agent reviewed the spec at 20:17 and failed it with two blocking problems. Then it reviewed the code three times and failed it twice before round three passed.
-
-Here is what the failed rounds found:
+A Grok agent reviewed the spec at 20:17 and failed it with two blocking problems. Then it reviewed the code three times, failed it twice, and passed round three. Here is what the failed rounds found:
 
 1. The paste could land in the wrong app, or paste your old clipboard instead of your words.
 2. A release inside a password field went unseen, so the mic stayed on and the clip was uploaded.
-3. A short press could still arm a second shortcut, and some microphones sent pure silence.
+3. A hold just past tap length left a double-Option press armed, and the audio path used a downmix step known to produce silence.
 
 The second one is a privacy bug, so it matters most. You start talking in a chat box, move into a password field, and let go of the key.
 
@@ -30,7 +28,7 @@ While a password field has focus, macOS stops delivering key events to the kind 
 
 ## Where the fixes came from
 
-Every blocking finding cited a line in Haynoi. The reviewer quoted its comments and line numbers instead of reasoning from scratch.
+Four of the six blocking findings cited a line in Haynoi. The reviewer quoted its comments and line numbers instead of reasoning from scratch.
 
 Haynoi's paste code says restoring the clipboard 400 ms after every paste, read or not, "is what used to make a failed paste unrecoverable." Pheme's spec restored it after a fixed 0.8 seconds.
 
@@ -38,11 +36,11 @@ Haynoi waits until every modifier key is up before it pastes, and falls back to 
 
 Haynoi watches for secure input and resyncs its key state, because "a release may be missed." Pheme's first code checked secure input only at paste time, after the audio was already sent.
 
-So the knowledge existed, in a folder next to Pheme on the same disk. None of it made it into the first code.
+So the knowledge existed, in a folder next to Pheme on the same disk. Of the other two, the downmix one pointed at Pheme's own meeting recorder, whose code already notes that this step gives silence.
 
 ## What changed
 
-Pheme now remembers which app was in front when you let go. It pastes only after every modifier is up and only if that app is still in front, otherwise it copies and tells you.
+Pheme already remembered which app was in front when you let go. Now it pastes only after every modifier is up and only if that app is still in front, otherwise it copies and tells you.
 
 Your old clipboard comes back only after the target app has actually read the pasted text. If nothing reads it, your dictated words stay on the clipboard for a manual paste.
 
