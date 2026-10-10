@@ -54,6 +54,26 @@ try {
   writeFileSync(summaryPath, summary);
   writeFileSync(fixtureManifestPath, originalManifest);
   checkAgentSurface(fixture);
+  const breakSummary = (text, error) => {
+    writeFileSync(summaryPath, text);
+    refreshArtifactProof();
+    assert.throws(() => checkAgentSurface(fixture), error);
+    writeFileSync(summaryPath, summary);
+    writeFileSync(fixtureManifestPath, originalManifest);
+  };
+  const summaryText = summary.toString();
+  breakSummary(summaryText.replace('](https://sonpiaz.com/writing.md) lists', ']() lists'), /must link writing\.md/);
+  const firstPost = summaryText.match(/^- \[.*\]\(https:\/\/sonpiaz\.com\/writing\/.*$/m)[0];
+  breakSummary(summaryText.replace(firstPost, Array(5).fill('- [x](https://sonpiaz.com/writing/x.md)').concat(firstPost).join('\n')), /inlines 9 posts; the ceiling is 8/);
+  const writingIndexPath = join(fixture, 'dist/writing.md');
+  const writingIndex = readFileSync(writingIndexPath);
+  const olderPost = writingIndex.toString().split('\n').filter(line => line.startsWith('- [')).at(-1);
+  writeFileSync(writingIndexPath, writingIndex.toString().replace(`${olderPost}\n`, ''));
+  refreshArtifactProof();
+  assert.throws(() => checkAgentSurface(fixture), /Missing writing\.md link/);
+  writeFileSync(writingIndexPath, writingIndex);
+  writeFileSync(fixtureManifestPath, originalManifest);
+  checkAgentSurface(fixture);
   const extraMarkdownPath = join(fixture, 'dist/debug.md');
   writeFileSync(extraMarkdownPath, '# Debug\n\nHosted on Vercel.\n');
   refreshArtifactProof();
@@ -66,7 +86,7 @@ try {
   checkAgentSurface(fixture);
   assert.deepEqual(sourceState(root), before, 'Original source changed during negative tests');
   checkAgentSurface(root);
-  console.log('PASS: isolated corrupted Markdown, missing Markdown, stale source, stale generator, missing index ID, provider-bearing extra Markdown, and orphan Markdown each fail; semantic cases use refreshed artifact hashes; restored fixture and original pass.');
+  console.log('PASS: isolated corrupted Markdown, missing Markdown, stale source, stale generator, missing index ID, unlinked writing.md, over-ceiling inlined posts, older post missing from writing.md, provider-bearing extra Markdown, and orphan Markdown each fail; semantic cases use refreshed artifact hashes; restored fixture and original pass.');
 } finally {
   rmSync(fixture, { recursive: true, force: true });
 }

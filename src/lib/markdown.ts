@@ -74,6 +74,10 @@ export async function markdownDocuments() {
   return documents;
 }
 
+// llms.txt is a fetch-once index with a byte cap in CI. Listing every post made its size grow with each
+// new post until the cap failed, so only the newest posts are inlined; writing.md carries the full list.
+const LLMS_RECENT_POSTS = 4;
+
 export async function llmsSummary() {
   const home = (await getEntry('pages', 'home'))!;
   const projects = (await getCollection('projects')).sort(compareProjects);
@@ -86,7 +90,7 @@ export async function llmsSummary() {
       const count = stackEntries.filter(entry => entry.data.group === group.id).length;
       return `- [${group.label}](${site}/stack.md#${group.anchor}): ${count} ${count === 1 ? 'tool' : 'tools'}`;
     }).join('\n')}\n\n- [Full grouped stack](${site}/stack.md) · ID: ${entityId('/stack')}`
-    + `\n\n## Writing\n\n${posts.map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description} ID: ${entityId(`/writing/${data.slug}`)}`).join('\n')}`
+    + `\n\n## Writing\n\nThe ${Math.min(posts.length, LLMS_RECENT_POSTS)} most recent of ${posts.length} posts. [All writing](${site}/writing.md) lists every post.\n\n${posts.slice(0, LLMS_RECENT_POSTS).map(({ data }) => `- [${data.title}](${site}/writing/${data.slug}.md) (${isoDate(data.date)}): ${data.description} ID: ${entityId(`/writing/${data.slug}`)}`).join('\n')}`
     + `\n\n## Pages\n\n- [Home](${site}/index.md) · ID: ${entityId('/')}\n- [All projects](${site}/projects.md) · ID: ${entityId('/projects')}\n- [All writing](${site}/writing.md) · ID: ${entityId('/writing')}\n${pages.map(page => `- [${page.data.title}](${site}/${page.id}.md) · ID: ${entityId(`/${page.id}`)}`).join('\n')}\n\n## Full text\n\n- [Full content](${site}/llms-full.txt)\n`;
 }
 

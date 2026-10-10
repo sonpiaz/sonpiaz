@@ -46,6 +46,12 @@ export function checkAgentSurface(root = process.cwd()) {
   const summary = read('dist/llms.txt');
   const full = read('dist/llms-full.txt');
   assert(Buffer.byteLength(summary) < 10000, 'llms.txt must stay below 10 KB');
+  // The byte cap alone lets a full post listing creep back in under it; bound the inlined posts too.
+  const writingSection = summary.match(/^## Writing\n([\s\S]*?)(?=^## )/m)?.[1] ?? '';
+  const inlinedPosts = [...writingSection.matchAll(/^- \[/gm)].length;
+  assert(inlinedPosts <= 8, `llms.txt inlines ${inlinedPosts} posts; the ceiling is 8. Link writing.md instead of listing every post.`);
+  assert(writingSection.includes('](https://sonpiaz.com/writing.md)'), 'llms.txt Writing section must link writing.md, where the full post list lives');
+  const writingIndex = read('dist/writing.md');
   const seenIds = new Set();
   const manifestIds = [];
   for (const url of htmlUrls) {
@@ -54,7 +60,9 @@ export function checkAgentSurface(root = process.cwd()) {
     const mdPath = path === '/' ? '/index.md' : `${path}.md`;
     const mdUrl = `https://sonpiaz.com${mdPath}`;
     assert(mdUrls.includes(mdUrl), `Missing sitemap twin: ${url}`);
-    assert(summary.includes(`](${mdUrl})`), `Missing llms index link: ${mdUrl}`);
+    const olderPost = path.startsWith('/writing/') && !summary.includes(`](${mdUrl})`);
+    if (olderPost) assert(writingIndex.includes(`](${url})`), `Missing writing.md link: ${url}`);
+    else assert(summary.includes(`](${mdUrl})`), `Missing llms index link: ${mdUrl}`);
     const html = read(`dist${path === '/' ? '/index.html' : `${path}/index.html`}`);
     const markdown = read(`dist${mdPath}`);
     const expectedId = `${url}#entity`;
@@ -62,7 +70,7 @@ export function checkAgentSurface(root = process.cwd()) {
     assert.equal(id, expectedId, `Invalid stable ID: ${mdPath}`);
     assert(!seenIds.has(id), `Duplicate stable ID: ${id}`);
     seenIds.add(id);
-    assert(summary.includes(`ID: ${id}`), `Missing llms index ID: ${mdPath}`);
+    if (!olderPost) assert(summary.includes(`ID: ${id}`), `Missing llms index ID: ${mdPath}`);
     assert(html.includes(`data-entity-id="${id}"`), `HTML identity mismatch: ${path}`);
     const graphs = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].flatMap(match => {
       const data = JSON.parse(match[1]);
