@@ -155,7 +155,7 @@ export function checkSiteDetails(root = process.cwd()) {
       assert(sitemap.includes(`<loc>${path}</loc>`), `Sitemap is missing ${path}`);
     }
     assert(rss.includes(`/writing/${slug}`), `RSS is missing ${slug}`);
-    assert(llms.includes(`/writing/${slug}.md`), `LLM exports are missing ${slug}`);
+    assert(llms.includes(`Source: https://sonpiaz.com/writing/${slug}\n`), `LLM exports are missing ${slug}`);
     const body = read(`content/posts/${slug}.md`).replace(/^---[\s\S]*?---\s*/, '');
     assert(!/[$€£]|\b(?:USD|ARR|MRR|CAC|LTV|ROI)\b|\b\d+(?:[.,]\d+)?\s*(?:%|percent|million|billion|thousand)\b/i.test(body), `Imported post contains a prohibited figure: ${slug}`);
   }
