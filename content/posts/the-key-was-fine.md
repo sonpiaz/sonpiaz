@@ -5,7 +5,7 @@ date: 2026-11-03
 description: An agent reported a dead API key and queued a replacement for me. The key worked. The script reading it kept the quotes.
 product: watch-cli
 problem: A script that reads a quoted .env value without stripping the quotes sends a key the API rejects, and the error blames the key.
-quote: "Key not valid" describes the bytes you sent, not the key you stored.
+quote: '"Key not valid" describes the bytes you sent, not the key you stored.'
 ---
 
 At 15:42 on November 2, an agent running a content job on my Mac mini sent a message. It said the Gemini key behind `audio-q` was invalid, and whoever held the key should replace it.
