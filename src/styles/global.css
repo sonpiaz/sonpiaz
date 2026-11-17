@@ -96,7 +96,7 @@ figure.diagram figcaption { font-size: 12px; color: var(--muted); margin-top: 12
 .stack-head { color: var(--muted); font-size: 12px; font-weight: 600; }
 .stack-name { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .stack-logo { width: 24px; height: 24px; flex: 0 0 24px; object-fit: contain; }
-.about-avatar { float: right; width: 160px; height: 160px; margin: 0 0 24px 32px; border-radius: 50%; filter: grayscale(1); object-fit: cover; }
+.about-avatar { float: right; width: 160px; height: 160px; margin: 0 0 24px 32px; border-radius: 50%; object-fit: cover; }
 .site-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
 .contribution-graph { margin: 0 0 12px; }
 .site-footer .contribution-graph > a { display: block; width: 100%; padding: 0; }
